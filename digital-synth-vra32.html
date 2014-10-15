@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-<title>Digital Synth VRA32</title>
+<title>Digital Synth VRA32 0.0.x</title>
 <style>
 td {
 text-align: left;
@@ -150,18 +150,26 @@ node.connect(audioContext.destination);
 </script>
 </head>
 <body>
-<h1>Digital Synth VRA32</h1>
+<h1>Digital Synth VRA32 0.0.x</h1>
+
+<p>We recommend Google Chrome. Please enable Web MIDI API.</p>
+
+<pre>chrome://flags/#enable-web-midi</pre>
 
 <h2>MIDI Settings</h2>
 
 <table>
 <tr>
+<td>Basic Channel</td>
+<td><select id="inputBasicChannel" size="1" onchange="onChangeInputPort()"></select></td>
+</tr>
+<tr>
 <td>MIDI IN</td>
-<td><select id="selectInputPort" size="1"  onchange="onChangeInputPort()"></select></td>
+<td><select id="selectInputPort" size="1" onchange="onChangeInputPort()"></select></td>
 </tr>
 <tr>
 <td>MIDI THRU</td>
-<td><select id="selectOutputPort" size="1"  onchange="onChangeOutputPort()"></select></td>
+<td><select id="selectOutputPort" size="1" onchange="onChangeOutputPort()"></select></td>
 </tr>
 </table>
 
@@ -201,7 +209,11 @@ node.connect(audioContext.destination);
 
 <h2>About</h2>
 
-<p>Digital Synth VRA32 is made by ISGK Instruments.</p>
+<ul>
+  <li>Maker: ISGK Instruments</li>
+  <li>License: <a href="http://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0 Universal</a></li>
+  <li><a href="https://github.com/risgk/digital-synth-vra32">View on GitHub</a></li>
+</ul>
 
 </body>
 </html>
