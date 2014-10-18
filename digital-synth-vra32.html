@@ -114,16 +114,11 @@ function onAudioProcess(event) {
 <!--<script src="vca.js"></script>-->
 <!--<script src="eg.js"></script>-->
 <!--<script src="mixer.js"></script>-->
-<!--<script src="program-table.js"></script>-->
-<!--<script src="synth.js"></script>-->
+<script src="program-table.js"></script>
+<script src="synth.js"></script>
 <script>
 
-// TODO: synth
-var synth = {
-  receive: function(data) {
-    console.log(data);
-  }
-};
+var synth = new Synth();
 
 node.connect(audioContext.destination);
 
