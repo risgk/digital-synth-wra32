@@ -104,7 +104,7 @@ function onAudioProcess(event) {
   var bufferL = event.outputBuffer.getChannelData(0);
   var bufferR = event.outputBuffer.getChannelData(1);
   for (var i = 0; i < bufferSize; i++) {
-    bufferL[i] = bufferR[i] = Math.random() * 0.05 - 0.5;
+    bufferL[i] = bufferR[i] = synth.clock();
   }
 }
 

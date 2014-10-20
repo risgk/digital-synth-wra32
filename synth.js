@@ -15,48 +15,49 @@ var Synth = function() {
 
 // TODO:  this.programChange(0);
 
+  that = this;
   this.receive = function(array) {
-    console.log(data);
-    data.forEach(function() { this.receiveMIDIByte(b) });
+    console.log(array);
+    array.forEach(function(b) { that.receiveMIDIByte(b) });
   }
 
   this.receiveMIDIByte = function(b) {
-    if (IsDataByte(b)) {
-      if (m_systemExclusive) {
+    if (this.IsDataByte(b)) {
+      if (this.systemExclusive) {
         // do nothing
-      } else if (m_systemDataRemaining != 0) {
+      } else if (this.systemDataRemaining != 0) {
         this.systemDataRemaining--;
-      } else if (m_runningStatus == NOTE_ON) {
-        if (!IsDataByte(m_firstData)) {
+      } else if (this.runningStatus == NOTE_ON) {
+        if (!this.IsDataByte(this.firstData)) {
           this.firstData = b;
         } else if (b == 0) {
-          this.noteOff(m_firstData);
+          this.noteOff(this.firstData);
           this.firstData = DATA_BYTE_INVALID;
         } else {
-          this.noteOn(m_firstData);
+          this.noteOn(this.firstData);
           this.firstData = DATA_BYTE_INVALID;
         }
-      } else if (m_runningStatus == NOTE_OFF) {
-        if (!IsDataByte(m_firstData)) {
+      } else if (this.runningStatus == NOTE_OFF) {
+        if (!this.IsDataByte(this.firstData)) {
           this.firstData = b;
         } else {
-          this.noteOff(m_firstData);
+          this.noteOff(this.firstData);
           this.firstData = DATA_BYTE_INVALID;
         }
-      } else if (m_runningStatus == PROGRAM_CHANGE) {
+      } else if (this.runningStatus == PROGRAM_CHANGE) {
         this.programChange(b);
-      } else if (m_runningStatus == CONTROL_CHANGE) {
-        if (!IsDataByte(m_firstData)) {
+      } else if (this.runningStatus == CONTROL_CHANGE) {
+        if (!this.IsDataByte(this.firstData)) {
           this.firstData = b;
         } else {
-          this.controlChange(m_firstData, b);
+          this.controlChange(this.firstData, b);
           this.firstData = DATA_BYTE_INVALID;
         }
       }
-    } else if (IsStatusByte(b)) {
+    } else if (this.IsStatusByte(b)) {
       this.runningStatus = b;
       this.firstData = DATA_BYTE_INVALID;
-    } else if (IsSystemMessage(b)) {
+    } else if (this.IsSystemMessage(b)) {
       switch (b) {
       case EOX:
         this.systemExclusive = false;
@@ -77,7 +78,8 @@ var Synth = function() {
   }
 
   this.clock = function() {
-    level = mixer.clock(vco1.clock(), vco2.clock(), vco3.clock());
+//    var level = mixer.clock(vco1.clock(), vco2.clock(), vco3.clock());
+    var level = vco1.clock();
 // TODO:    egOutput = eg.clock();
 // TODO:    level = vcf.clock(level, egOutput);
 // TODO:    level = vca.clock(level, egOutput);
@@ -136,15 +138,15 @@ var Synth = function() {
     }
 
     this.noteNumber = noteNumber;
-    vco1.noteOn(m_noteNumber);
-    vco2.noteOn(m_noteNumber);
-    vco3.noteOn(m_noteNumber);
-    eg.noteOn();
+    vco1.noteOn(this.noteNumber);
+    vco2.noteOn(this.noteNumber);
+    vco3.noteOn(this.noteNumber);
+// TODO:    eg.noteOn();
   }
 
   this.noteOff = function(noteNumber) {
     if (noteNumber == this.noteNumber) {
-      eg.noteOff();
+// TODO:    eg.noteOff();
     }
   }
 
@@ -315,4 +317,6 @@ var Synth = function() {
     eg.setSustainLevel(programTable[i + 13]);
     this.resetPhase();
   }
+
+  this.noteOn(60); // TODO: deleted
 }

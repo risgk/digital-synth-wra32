@@ -10,11 +10,22 @@ var VCO = function() {
   this.waveTablesSawtooth = [];
   this.waveTablesSquare = [];
   this.waveTablesTriangle = [];
+  this.waveTable = [];
+  for (var i = 0; i <= 2047; i++) {
+    this.waveTable[i] = (i / 1024 - 1) / 8;
+  }
 
-  // TODO
-  this.freqTableMinus10Cent = [];
-  this.freqTable0Cent = [];
-  this.freqTablePlus10Cent = [];
+  this.freqTable = [];
+  var freqC4toB4 = []
+  for (var i = 0; i <= 11; i++) {
+    n = i + 60;
+    cent = (n * 100) - 6900;
+    hz = 440 * Math.pow(2, cent / 1200);
+    freqC4toB4[i] = Math.floor((hz * 0x100000000 / SAMPLING_RATE) / 32) * 32;
+  }
+  for (var n = 0; n <= 127; n++) {
+    this.freqTable[n] = Math.floor(freqC4toB4[n % 12] * Math.pow(2, Math.floor(n / 12) - 5));
+  }
 
   this.resetPhase = function() {
     this.phase = 0;
@@ -55,35 +66,27 @@ var VCO = function() {
 
   this.clock = function() {
     this.phase += this.freq;
-    this.phase &= 0xFFFF;
+    this.phase &= 0xFFFFFFFF;
 
-    var waveTable = this.waveTables[this.freq >> 8];
-    var currIndex = this.phase >> 8;
+    var waveTable = this.waveTable;
+//    var waveTable = this.waveTables[this.freq >> 11];
+    var currIndex = this.phase >> 21;
     var nextIndex = currIndex + 1;
-    nextIndex &= 0xFF;
+    nextIndex &= 0x07FF;
     var currData = waveTable[currIndex];
     var nextData = waveTable[nextIndex];
 
     var level;
-    var nextWeight = lowByte(this.phase);
-    if (nextWeight == 0) {
-      level = currData;
-    } else {
-      var currWeight = 256 - nextWeight;
-      level = ((currData * currWeight) + (nextData * nextWeight)) / 256;
-    }
+    var nextWeight = this.phase & 0x001FFFFF;
+    var currWeight = 0x00200000 - nextWeight;
+    level = ((currData * currWeight) + (nextData * nextWeight)) / 0x00200000;
 
     return level;
   }
 
   this.updateFreq = function() {
     var noteNumber = this.noteNumber + this.courseTune - 64;
-    if (this.fineTune <= 63) {
-      this.freq = this.freqTableMinus10Cent[noteNumber];
-    } else if (this.fineTune == 64) {
-      this.freq = this.freqTable0Cent[noteNumber];
-    } else {
-      this.freq = this.freqTablePlus10Cent[noteNumber];
-    }
+    this.freq = this.freqTable[noteNumber];
+// TODO:   this.freq = Math.floor(this.freqTable[noteNumber] * (this.fineTune - 64));
   }
 }
