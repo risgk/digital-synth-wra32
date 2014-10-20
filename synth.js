@@ -1,10 +1,10 @@
-var vco1 = {}; // TODO
-var vco2 = {}; // TODO
-var vco3 = {}; // TODO
+var vco1 = new VCO();
+var vco2 = new VCO();
+var vco3 = new VCO();
 var vcf = {}; // TODO
 var vca = {}; // TODO
 var eg = {}; // TODO
-var mixer = {}; // TODO
+var mixer = new Mixer();
 
 var Synth = function() {
   this.systemExclusive     = false;
