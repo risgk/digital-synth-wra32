@@ -1,6 +1,7 @@
 const OPTION_BLACK_KEY_PROGRAM_CHANGE = true;
 
 const MIDI_CH         = 0;
+const MAX_FREQ        = 20000;
 const NOTE_NUMBER_MIN = 0;
 const NOTE_NUMBER_MAX = 127;
 

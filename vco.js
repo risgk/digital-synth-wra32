@@ -1,30 +1,61 @@
 var VCO = function() {
-  this.waveTables = this.waveTablesSawtooth;
-  this.courseTune = 64;
-  this.fineTune   = 64;
-  this.noteNumber = 60;
-  this.phase      = 0;
-  this.freq       = 0;
+  var that = this;
 
-  // TODO
   this.waveTablesSawtooth = [];
+  for (var m = 1; m <= 64; m++) {
+    var waveTable = [];
+    for (var t = 0; t < 2048; t++) {
+      var level = 0;
+      for (var k = 1; k <= m; k++) {
+        level += Math.sin((2 * Math.PI) * (t / 2048) * k) / k;
+      }
+      waveTable[t] = level / 8;
+    }
+    that.waveTablesSawtooth[m] = waveTable;
+  }
+
   this.waveTablesSquare = [];
+  for (var m = 1; m <= 64; m++) {
+    var waveTable = [];
+    for (var t = 0; t < 2048; t++) {
+      var level = 0;
+      for (var k = 1; k <= m; k++) {
+        if (k % 2 == 1) {
+          level += 2 * Math.sin((2 * Math.PI) * (t / 2048) * k) / k;
+        }
+      }
+      waveTable[t] = level / 8;
+    }
+    that.waveTablesSquare[m] = waveTable;
+  }
+
   this.waveTablesTriangle = [];
-  this.waveTable = [];
-  for (var i = 0; i <= 2047; i++) {
-    this.waveTable[i] = (i / 1024 - 1) / 8;
+  for (var m = 1; m <= 64; m++) {
+    var waveTable = [];
+    for (var t = 0; t < 2048; t++) {
+      var level = 0;
+      for (var k = 1; k <= m; k++) {
+        if (k % 4 == 1) {
+          level += (4 / Math.PI) * Math.sin((2 * Math.PI) * (t / 2048) * k) / Math.pow(k, 2);
+        } else if (k % 4 == 3) {
+          level += (4 / Math.PI) * -Math.sin((2 * Math.PI) * (t / 2048) * k) / Math.pow(k, 2);
+        }
+      }
+      waveTable[t] = level / 8;
+    }
+    that.waveTablesTriangle[m] = waveTable;
   }
 
   this.freqTable = [];
-  var freqC4toB4 = []
+  this.freqC4toB4 = []
   for (var i = 0; i <= 11; i++) {
     n = i + 60;
     cent = (n * 100) - 6900;
     hz = 440 * Math.pow(2, cent / 1200);
-    freqC4toB4[i] = Math.floor((hz * 0x100000000 / SAMPLING_RATE) / 32) * 32;
+    that.freqC4toB4[i] = Math.floor((hz * 0x100000000 / SAMPLING_RATE) / 32) * 32;
   }
   for (var n = 0; n <= 127; n++) {
-    this.freqTable[n] = Math.floor(freqC4toB4[n % 12] * Math.pow(2, Math.floor(n / 12) - 5));
+    this.freqTable[n] = Math.floor(that.freqC4toB4[n % 12] * Math.pow(2, Math.floor(n / 12) - 5));
   }
 
   this.resetPhase = function() {
@@ -67,9 +98,7 @@ var VCO = function() {
   this.clock = function() {
     this.phase += this.freq;
     this.phase &= 0xFFFFFFFF;
-
-    var waveTable = this.waveTable;
-//    var waveTable = this.waveTables[this.freq >> 11];
+    var waveTable = this.waveTables[this.maxOvertone];
     var currIndex = this.phase >> 21;
     var nextIndex = currIndex + 1;
     nextIndex &= 0x07FF;
@@ -86,7 +115,18 @@ var VCO = function() {
 
   this.updateFreq = function() {
     var noteNumber = this.noteNumber + this.courseTune - 64;
-    this.freq = this.freqTable[noteNumber];
-// TODO:   this.freq = Math.floor(this.freqTable[noteNumber] * (this.fineTune - 64));
+    this.freq = Math.floor(this.freqTable[noteNumber] * Math.pow(2, (this.fineTune - 64) / 768));
+    this.maxOvertone = Math.floor((MAX_FREQ * 0x100000000) / (this.freq * SAMPLING_RATE));
+    if (this.maxOvertone > 64) {
+      this.maxOvertone = 64;
+    }
   }
+
+  this.waveTables  = this.waveTablesSawtooth;
+  this.courseTune  = 64;
+  this.fineTune    = 64;
+  this.noteNumber  = 60;
+  this.phase       = 0;
+  this.freq        = 0;
+  this.maxOvertone = 1;
 }
