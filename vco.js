@@ -2,8 +2,8 @@ var VCO = function() {
   var that = this;
 
   this.waveTablesSawtooth = [];
-  for (var m = 1; m <= 64; m++) {
-    var waveTable = [];
+  for (var m = 1; m <= 128; m++) {
+    var waveTable = new Float32Array(2048);
     for (var t = 0; t < 2048; t++) {
       var level = 0;
       for (var k = 1; k <= m; k++) {
@@ -15,8 +15,8 @@ var VCO = function() {
   }
 
   this.waveTablesSquare = [];
-  for (var m = 1; m <= 64; m++) {
-    var waveTable = [];
+  for (var m = 1; m <= 128; m++) {
+    var waveTable = new Float32Array(2048);
     for (var t = 0; t < 2048; t++) {
       var level = 0;
       for (var k = 1; k <= m; k++) {
@@ -30,8 +30,8 @@ var VCO = function() {
   }
 
   this.waveTablesTriangle = [];
-  for (var m = 1; m <= 64; m++) {
-    var waveTable = [];
+  for (var m = 1; m <= 128; m++) {
+    var waveTable = new Float32Array(2048);
     for (var t = 0; t < 2048; t++) {
       var level = 0;
       for (var k = 1; k <= m; k++) {
@@ -97,13 +97,16 @@ var VCO = function() {
 
   this.clock = function() {
     this.phase += this.freq;
-    this.phase &= 0xFFFFFFFF;
-    var waveTable = this.waveTables[this.maxOvertone];
-    var currIndex = this.phase >> 21;
+    if (this.phase >= 0x100000000) {
+      this.phase -= 0x100000000;
+    }
+    var currIndex = Math.floor(this.phase / 0x00200000);
     var nextIndex = currIndex + 1;
-    nextIndex &= 0x07FF;
-    var currData = waveTable[currIndex];
-    var nextData = waveTable[nextIndex];
+    if (this.nextIndex >= 0x0800) {
+      this.nextIndex -= 0x0800;
+    }
+    var currData = this.waveTable[currIndex];
+    var nextData = this.waveTable[nextIndex];
 
     var level;
     var nextWeight = this.phase & 0x001FFFFF;
@@ -117,9 +120,10 @@ var VCO = function() {
     var noteNumber = this.noteNumber + this.courseTune - 64;
     this.freq = Math.floor(this.freqTable[noteNumber] * Math.pow(2, (this.fineTune - 64) / 768));
     this.maxOvertone = Math.floor((MAX_FREQ * 0x100000000) / (this.freq * SAMPLING_RATE));
-    if (this.maxOvertone > 64) {
-      this.maxOvertone = 64;
+    if (this.maxOvertone > 128) {
+      this.maxOvertone = 128;
     }
+    this.waveTable = this.waveTables[this.maxOvertone];
   }
 
   this.waveTables  = this.waveTablesSawtooth;

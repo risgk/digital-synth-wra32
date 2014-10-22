@@ -78,7 +78,7 @@ var Synth = function() {
   }
 
   this.clock = function() {
-    var level = mixer.clock(vco1.clock(), vco2.clock(), 0);
+    var level = mixer.clock(vco1.clock(), vco2.clock(), vco3.clock());
 // TODO:    egOutput = eg.clock();
 // TODO:    level = vcf.clock(level, egOutput);
 // TODO:    level = vca.clock(level, egOutput);
@@ -318,6 +318,10 @@ var Synth = function() {
   }
 
   // TODO: deleted
-  vco2.setFineTune(90);
+  vco1.setWaveform(0);
+  vco2.setWaveform(0);
+  vco3.setWaveform(2);
+  vco2.setFineTune(70);
+  vco3.setFineTune(64);
   this.noteOn(60);
 }
