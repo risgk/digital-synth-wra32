@@ -8,41 +8,41 @@ var programTable = [
 
   // Sub Osc Lead
   SAWTOOTH, 64,
-  SAWTOOTH, 64, 77,
+  SAWTOOTH, 64, 70,
   TRIANGLE, 52, 64,
-  64, ON, 64,
+  84, 127, 12,
   0, 80, 127,
   64, 64,
 
   // Saw Lead
   SAWTOOTH, 64,
-  SAWTOOTH, 64, 77,
+  SAWTOOTH, 64, 70,
   SAWTOOTH, 64, 64,
-  64, ON, 64,
+  84, 127, 12,
   0, 80, 127,
   64, 64,
 
   // Square Lead
   SQUARE, 64,
-  SQUARE, 64, 77,
+  SQUARE, 64, 70,
   SQUARE, 64, 64,
-  64, OFF, 64,
+  84, 0, 12,
   16, 80, 127,
   64, 64,
 
   // Synth Pad
   SAWTOOTH, 64,
-  SAWTOOTH, 64, 77,
+  SAWTOOTH, 64, 70,
   TRIANGLE, 64, 64,
-  0, ON, 127,
+  72, 127, 24,
   127, 127, 127,
   64, 64,
 
   // Synth Bass
   TRIANGLE, 64,
-  SAWTOOTH, 64, 77,
+  SAWTOOTH, 64, 70,
   SAWTOOTH, 64, 64,
-  0, ON, 127,
+  72, 127, 24,
   0, 112, 0,
   64, 64,
 ];

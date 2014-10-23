@@ -105,8 +105,9 @@ var VCO = function() {
     if (nextIndex >= SAMPLES_PER_CYCLE) {
       nextIndex -= SAMPLES_PER_CYCLE;
     }
-    var currData = this.waveTable[currIndex];
-    var nextData = this.waveTable[nextIndex];
+    var waveTable = this.waveTables[this.overtone];
+    var currData = waveTable[currIndex];
+    var nextData = waveTable[nextIndex];
 
     var level;
     var nextWeight = this.phase % (CYCLE_RESOLUTION / SAMPLES_PER_CYCLE);
@@ -123,7 +124,6 @@ var VCO = function() {
     if (this.overtone > MAX_OVERTONE) {
       this.overtone = MAX_OVERTONE;
     }
-    this.waveTable = this.waveTables[this.overtone];
   }
 
   this.courseTune  = 64;
@@ -133,5 +133,4 @@ var VCO = function() {
   this.freq        = 0;
   this.overtone    = 1;
   this.waveTables  = this.waveTablesSawtooth;
-  this.waveTable   = this.waveTables[this.overtone];
 }

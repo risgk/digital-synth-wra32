@@ -44,7 +44,6 @@ function onMIDISuccess(midiAccess) {
     selectInputPort.appendChild(new Option(midiInputs[i].name))
   }
   onChangeInputPort();
-  resetControllers();
 }
 
 function onMIDIFailure(msg) {
@@ -64,6 +63,10 @@ function onChangeControlChange(controllerNumber, value) {
   document.getElementById("spanCC" + String(controllerNumber)).innerHTML = value;
   synth.receive([0xB0 | MIDI_CH, controllerNumber, parseInt(value)]);
 }
+
+window.onload = function() {
+  resetControllers();
+};
 
 function resetControllers() {
   onChangeControlChange(40, 0  );

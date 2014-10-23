@@ -7,15 +7,8 @@ var eg = new EG();
 var mixer = new Mixer();
 
 var Synth = function() {
-  this.systemExclusive     = false;
-  this.systemDataRemaining = 0;
-  this.runningStatus       = STATUS_BYTE_INVALID;
-  this.firstData           = DATA_BYTE_INVALID;
-  this.noteNumber          = 60;
-
-// TODO:  this.programChange(0);
-
   that = this;
+
   this.receive = function(array) {
     console.log(array);
     array.forEach(function(b) { that.receiveMIDIByte(b) });
@@ -140,12 +133,12 @@ var Synth = function() {
     vco1.noteOn(this.noteNumber);
     vco2.noteOn(this.noteNumber);
     vco3.noteOn(this.noteNumber);
-// TODO:    eg.noteOn();
+    eg.noteOn();
   }
 
   this.noteOff = function(noteNumber) {
     if (noteNumber == this.noteNumber) {
-// TODO:    eg.noteOff();
+      eg.noteOff();
     }
   }
 
@@ -258,9 +251,7 @@ var Synth = function() {
   }
 
   this.setVCFCutoffFrequency = function(value) {
-    this.soundOff();
     vcf.setCutoffFrequency(value);
-    this.resetPhase();
   }
 
   this.setVCFResonance = function(value) {
@@ -317,11 +308,11 @@ var Synth = function() {
     this.resetPhase();
   }
 
-  // TODO: deleted
-  vco1.setWaveform(0);
-  vco2.setWaveform(0);
-  vco3.setWaveform(2);
-  vco2.setFineTune(70);
-  vco3.setFineTune(64);
-  this.noteOn(60);
+  this.systemExclusive     = false;
+  this.systemDataRemaining = 0;
+  this.runningStatus       = STATUS_BYTE_INVALID;
+  this.firstData           = DATA_BYTE_INVALID;
+  this.noteNumber          = 60;
+
+  this.programChange(0);
 }
