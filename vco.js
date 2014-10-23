@@ -102,8 +102,8 @@ var VCO = function() {
     }
     var currIndex = Math.floor(this.phase / (CYCLE_RESOLUTION / SAMPLES_PER_CYCLE));
     var nextIndex = currIndex + 1;
-    if (this.nextIndex >= SAMPLES_PER_CYCLE) {
-      this.nextIndex -= SAMPLES_PER_CYCLE;
+    if (nextIndex >= SAMPLES_PER_CYCLE) {
+      nextIndex -= SAMPLES_PER_CYCLE;
     }
     var currData = this.waveTable[currIndex];
     var nextData = this.waveTable[nextIndex];
