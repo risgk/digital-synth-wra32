@@ -1,9 +1,9 @@
+var VCF = function() {
+  this.clock = function(a, k) {
+    return a;
+  }
+}
 /*
-#pragma once
-
-#include "Common.h"
-#include "LPFTable.h"
-
 class VCF
 {
   static const uint8_t* m_lpfTable;

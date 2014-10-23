@@ -1,9 +1,9 @@
+var EG = function() {
+  this.clock = function() {
+    return 1;
+  }
+}
 /*
-#pragma once
-
-#include "Common.h"
-#include "EnvTable.h"
-
 class EG
 {
   static const uint8_t STATE_ATTACK  = 0;

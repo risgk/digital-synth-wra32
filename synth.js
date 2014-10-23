@@ -1,9 +1,9 @@
 var vco1 = new VCO();
 var vco2 = new VCO();
 var vco3 = new VCO();
-var vcf = {}; // TODO
-var vca = {}; // TODO
-var eg = {}; // TODO
+var vcf = new VCF();
+var vca = new VCA();
+var eg = new EG();
 var mixer = new Mixer();
 
 var Synth = function() {
@@ -79,9 +79,9 @@ var Synth = function() {
 
   this.clock = function() {
     var level = mixer.clock(vco1.clock(), vco2.clock(), vco3.clock());
-// TODO:    egOutput = eg.clock();
-// TODO:    level = vcf.clock(level, egOutput);
-// TODO:    level = vca.clock(level, egOutput);
+    egOutput = eg.clock();
+    level = vcf.clock(level, egOutput);
+    level = vca.clock(level, egOutput);
     return level;
   }
 
