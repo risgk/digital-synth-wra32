@@ -2,7 +2,6 @@ var VCO = function() {
   const CYCLE_RESOLUTION  = 0x100000000;
   const MAX_OVERTONE      = 64;
   const SAMPLES_PER_CYCLE = 2048;
-  const GAIN              = 0.5;
 
   var that = this;
 
@@ -14,7 +13,7 @@ var VCO = function() {
         for (var k = 1; k <= m; k++) {
           level += f(t, k);
         }
-        waveTable[t] = level * GAIN;
+        waveTable[t] = level;
       }
       waveTables[m] = waveTable;
     }

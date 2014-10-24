@@ -26,7 +26,7 @@ var programTable = [
   SQUARE, 64,
   SQUARE, 64, 70,
   SQUARE, 64, 64,
-  84, 0, 12,
+  84, 1, 12,
   16, 80, 127,
   64, 64,
 
