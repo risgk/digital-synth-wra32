@@ -14,7 +14,11 @@ var VCF = function() {
   }
 
   this.clock = function(a, k) {
-    var c = this.cutoffFrequency + (this.envelopeAmount * k)
+    var e = this.envelopeAmount;
+    if (e > 120) {
+      e = 120;
+    }
+    var c = this.cutoffFrequency + (e * k);
     if (c > 120) {
       c = 120;
     }
@@ -22,7 +26,7 @@ var VCF = function() {
     if (r > 120) {
       r = 120;
     }
-    var q = Math.pow(Math.sqrt(2), (r - 20) / 20);
+    var q = Math.pow(Math.sqrt(2), (r - 24) / 24);
 
     var f0OverFs = (MAX_FREQ * Math.pow(2, -10 + (c / 12))) / SAMPLING_RATE;
     var w0 = 2 * Math.PI * f0OverFs;

@@ -11,6 +11,12 @@ td.key {
   height: 64px;
   border: 2px solid #999;
 }
+td.keyh {
+  text-align: center;
+  width: 20px;
+  height: 64px;
+  border: 2px solid #999;
+}
 </style>
 <script>
 var midiCh = 0;
@@ -62,7 +68,7 @@ function onChangeInputPort(){
 }
 
 function onChangeControlChange(controllerNumber, value) {
-  document.getElementById("inputCC" + String(controllerNumber)).value = value;
+  document.getElementById("inputCC" + String(controllerNumber)).value = parseInt(value);
   document.getElementById("spanCC" + String(controllerNumber)).innerHTML = value;
   synth.receive([(CONTROL_CHANGE | midiCh), controllerNumber, parseInt(value)]);
 }
@@ -85,17 +91,17 @@ function resetControllers() {
 }
 
 function noteOn(noteNumber) {
-  synth.receive([(NOTE_ON | midiCh), noteNumber, 127]);
+  synth.receive([(NOTE_ON | midiCh), noteNumber + transpose, 127]);
 }
 
 function noteOff(noteNumber) {
-  synth.receive([(NOTE_OFF | midiCh), noteNumber, 0]);
+  synth.receive([(NOTE_OFF | midiCh), noteNumber + transpose, 0]);
 }
 
 function onChangeChannel(value) {
-  document.getElementById("inputChannel").value = value;
+  document.getElementById("inputChannel").value = parseInt(value);
   document.getElementById("spanChannel").innerHTML = value;
-  midiCh = value - 1;
+  midiCh = parseInt(value) - 1;
 }
 </script>
 <script>
@@ -105,6 +111,7 @@ var SAMPLING_RATE = audioContext.sampleRate;
 var node = audioContext.createScriptProcessor();
 var bufferSize = node.bufferSize;
 var volume = 0;
+var transpose = 0;
 
 node.onaudioprocess = onAudioProcess;
 
@@ -117,15 +124,22 @@ function onAudioProcess(event) {
 }
 
 function onChangeVolume(value) {
-  document.getElementById("inputVolume").value = value;
+  document.getElementById("inputVolume").value = parseInt(value);
   document.getElementById("spanVolume").innerHTML = value;
-  volume = value;
+  volume = parseInt(value);
+}
+
+function onChangeTranspose(value) {
+  document.getElementById("inputTranspose").value = parseInt(value);
+  document.getElementById("spanTranspose").innerHTML = value;
+  transpose = parseInt(value);
 }
 
 window.onload = function() {
   resetControllers();
   onChangeVolume(100);
   onChangeChannel(1);
+  onChangeTranspose(0);
 };
 
 </script>
@@ -154,6 +168,7 @@ node.connect(audioContext.destination);
 <tr>
 <td>MIDI IN</td>
 <td><select id="selectInputPort" size="1" onchange="onChangeInputPort()"></select></td>
+</tr>
 <tr>
 <td>Basic Channel</td>
 <td><input id="inputChannel" type="range" min="1" max="16"  step="1" onchange="onChangeChannel(value)"></td><td><span id="spanChannel">-1</span></td>
@@ -178,7 +193,7 @@ node.connect(audioContext.destination);
 <tr><td>VCO 3 Fine Tune     </td><td><input id="inputCC47"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(47, value)"></td><td><span id="spanCC47">-1</span></td></tr>
 <tr><td>VCF Cutoff Frequency</td><td><input id="inputCC48"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(48, value)"></td><td><span id="spanCC48">-1</span></td></tr>
 <tr><td>VCF Resonance       </td><td><input id="inputCC49"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(49, value)"></td><td><span id="spanCC49">-1</span></td></tr>
-<tr><td>VCF Envelope Amount </td><td><input id="inputCC50"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(50, value)"></td><td><span id="spanCC50">-1</span></td></tr>
+<tr><td>VCF Envelope Amount </td><td><input id="inputCC50"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(50, value)"></td><td><span id="spanCC50">-1</span></td></tr>
 <tr><td>EG Attack Time      </td><td><input id="inputCC51"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(51, value)"></td><td><span id="spanCC51">-1</span></td></tr>
 <tr><td>EG Decay Time       </td><td><input id="inputCC52"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(52, value)"></td><td><span id="spanCC52">-1</span></td></tr>
 <tr><td>EG Sustain Level    </td><td><input id="inputCC53"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(53, value)"></td><td><span id="spanCC53">-1</span></td></tr>
@@ -190,6 +205,27 @@ node.connect(audioContext.destination);
 
 <table>
 <tr>
+<td class="keyh"></td>
+<td class="key" onmouseover="noteOn(49)" onmouseout="noteOff(49)">C#3</td>
+<td class="key" onmouseover="noteOn(51)" onmouseout="noteOff(51)">D#3</td>
+<td class="key"></td>
+<td class="key" onmouseover="noteOn(54)" onmouseout="noteOff(54)">F#3</td>
+<td class="key" onmouseover="noteOn(56)" onmouseout="noteOff(56)">G#3</td>
+<td class="key" onmouseover="noteOn(58)" onmouseout="noteOff(58)">A#3</td>
+<td class="keyh"></td>
+<td class="keyh"></td>
+<td class="key" onmouseover="noteOn(61)" onmouseout="noteOff(61)">C#4</td>
+<td class="key" onmouseover="noteOn(63)" onmouseout="noteOff(63)">D#4</td>
+<td class="key"></td>
+<td class="key" onmouseover="noteOn(66)" onmouseout="noteOff(66)">F#4</td>
+<td class="key" onmouseover="noteOn(68)" onmouseout="noteOff(68)">G#4</td>
+<td class="key" onmouseover="noteOn(70)" onmouseout="noteOff(70)">A#4</td>
+<td class="keyh"></td>
+<td class="key"></td>
+</tr>
+</table>
+<table>
+<tr>
 <td class="key" onmouseover="noteOn(48)" onmouseout="noteOff(48)">C3</td>
 <td class="key" onmouseover="noteOn(50)" onmouseout="noteOff(50)">D3</td>
 <td class="key" onmouseover="noteOn(52)" onmouseout="noteOff(52)">E3</td>
@@ -198,6 +234,20 @@ node.connect(audioContext.destination);
 <td class="key" onmouseover="noteOn(57)" onmouseout="noteOff(57)">A3</td>
 <td class="key" onmouseover="noteOn(59)" onmouseout="noteOff(59)">B3</td>
 <td class="key" onmouseover="noteOn(60)" onmouseout="noteOff(60)">C4</td>
+<td class="key" onmouseover="noteOn(62)" onmouseout="noteOff(62)">D4</td>
+<td class="key" onmouseover="noteOn(64)" onmouseout="noteOff(64)">E4</td>
+<td class="key" onmouseover="noteOn(65)" onmouseout="noteOff(65)">F4</td>
+<td class="key" onmouseover="noteOn(67)" onmouseout="noteOff(67)">G4</td>
+<td class="key" onmouseover="noteOn(69)" onmouseout="noteOff(69)">A4</td>
+<td class="key" onmouseover="noteOn(71)" onmouseout="noteOff(71)">B4</td>
+<td class="key" onmouseover="noteOn(72)" onmouseout="noteOff(72)">C5</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td>Transpose</td>
+<td><input id="inputTranspose" type="range" min="-48" max="48" step="12" onchange="onChangeTranspose(value)" ></td><td><span id="spanTranspose" >-1</span></td>
 </tr>
 </table>
 
