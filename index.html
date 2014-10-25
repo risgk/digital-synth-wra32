@@ -23,6 +23,7 @@ var midiCh = 0;
 </script>
 <script src="common.js"></script>
 <script>
+var strage     = localStorage;
 var midi       = null;
 var midiInputs = null;
 var midiInput  = null;
@@ -67,10 +68,11 @@ function onChangeInputPort(){
   }
 }
 
-function onChangeControlChange(controllerNumber, value) {
-  document.getElementById("inputCC" + String(controllerNumber)).value = parseInt(value);
-  document.getElementById("spanCC" + String(controllerNumber)).innerHTML = value;
-  synth.receive([(CONTROL_CHANGE | midiCh), controllerNumber, parseInt(value)]);
+function onChangeControlChange(number, value) {
+  document.getElementById("inputCC" + String(number)).value = parseInt(value);
+  document.getElementById("spanCC" + String(number)).innerHTML = value;
+  strage.setItem("keyCC" + String(number), value);
+  synth.receive([(CONTROL_CHANGE | midiCh), number, parseInt(value)]);
 }
 
 function resetControllers() {
@@ -101,6 +103,7 @@ function noteOff(noteNumber) {
 function onChangeChannel(value) {
   document.getElementById("inputChannel").value = parseInt(value);
   document.getElementById("spanChannel").innerHTML = value;
+  strage.setItem("keyChannel", value);
   midiCh = parseInt(value) - 1;
 }
 </script>
@@ -126,20 +129,56 @@ function onAudioProcess(event) {
 function onChangeVolume(value) {
   document.getElementById("inputVolume").value = parseInt(value);
   document.getElementById("spanVolume").innerHTML = value;
+  strage.setItem("keyVolume", value);
   volume = parseInt(value);
 }
 
 function onChangeTranspose(value) {
   document.getElementById("inputTranspose").value = parseInt(value);
   document.getElementById("spanTranspose").innerHTML = value;
+  strage.setItem("keyTranspose", value);
   transpose = parseInt(value);
 }
 
+function loadParameters() {
+  var value;
+  for (var i = 40; i <= 53; i++) {
+    value = strage.getItem("keyCC" + String(i));
+    if (!value) {
+      return false;
+    }
+    onChangeControlChange(i, value);
+  }
+
+  value = strage.getItem("keyChannel");
+  if (!value) {
+    return false;
+  }
+  onChangeChannel(value);
+
+  value = strage.getItem("keyVolume");
+  if (!value) {
+    return false;
+  }
+  onChangeVolume(value);
+
+  value = strage.getItem("keyTranspose");
+  if (!value) {
+    return false;
+  }
+  onChangeTranspose(value);
+
+  return true;
+}
+
 window.onload = function() {
-  resetControllers();
-  onChangeVolume(100);
-  onChangeChannel(1);
-  onChangeTranspose(0);
+  var result = loadParameters();
+  if (!result) {
+    resetControllers();
+    onChangeChannel(1);
+    onChangeVolume(100);
+    onChangeTranspose(0);
+  }
 };
 
 </script>
