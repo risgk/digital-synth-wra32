@@ -18,12 +18,11 @@ var VCF = function() {
     if (c > 120) {
       c = 120;
     }
-
     var r = this.resonance;
-    if (r == 0) {
-      r = 1;
+    if (r > 120) {
+      r = 120;
     }
-    var q = Math.pow(Math.sqrt(2), (r - 40) / 40);
+    var q = Math.pow(Math.sqrt(2), (r - 20) / 20);
 
     var f0OverFs = (MAX_FREQ * Math.pow(2, -10 + (c / 12))) / SAMPLING_RATE;
     var w0 = 2 * Math.PI * f0OverFs;
@@ -51,7 +50,7 @@ var VCF = function() {
     return y0;
   }
 
-  this.cutoffFrequency = 127;
+  this.cutoffFrequency = 120;
   this.resonance       = 0;
   this.envelopeAmount  = 0;
   this.x1              = 0;

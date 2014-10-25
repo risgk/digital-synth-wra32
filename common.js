@@ -1,4 +1,3 @@
-const MIDI_CH         = 0;
 const MAX_FREQ        = 20000;
 const NOTE_NUMBER_MIN = 0;
 const NOTE_NUMBER_MAX = 127;
@@ -14,9 +13,9 @@ const DATA_BYTE_MAX         = 0x7F;
 const DATA_BYTE_INVALID     = 0x80;
 const STATUS_BYTE_INVALID   = 0x7F;
 const STATUS_BYTE_MIN       = 0x80;
-const NOTE_ON               = (0x90 | MIDI_CH);
-const NOTE_OFF              = (0x80 | MIDI_CH);
-const CONTROL_CHANGE        = (0xB0 | MIDI_CH);
+const NOTE_ON               = 0x90;
+const NOTE_OFF              = 0x80;
+const CONTROL_CHANGE        = 0xB0;
 const SYSTEM_MESSAGE_MIN    = 0xF0;
 const SYSTEM_EXCLUSIVE      = 0xF0;
 const TIME_CODE             = 0xF1;

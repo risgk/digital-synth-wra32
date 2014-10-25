@@ -11,7 +11,9 @@ var Synth = function() {
 
   this.receive = function(array) {
     console.log(array);
-    array.forEach(function(b) { that.receiveMIDIByte(b) });
+    for (var i = 0; i < array.length; i++) {
+      this.receiveMIDIByte(array[i]);
+    }
   }
 
   this.receiveMIDIByte = function(b) {
@@ -20,7 +22,7 @@ var Synth = function() {
         // do nothing
       } else if (this.systemDataRemaining != 0) {
         this.systemDataRemaining--;
-      } else if (this.runningStatus == NOTE_ON) {
+      } else if (this.runningStatus == (NOTE_ON | midiCh)) {
         if (!this.IsDataByte(this.firstData)) {
           this.firstData = b;
         } else if (b == 0) {
@@ -30,14 +32,14 @@ var Synth = function() {
           this.noteOn(this.firstData);
           this.firstData = DATA_BYTE_INVALID;
         }
-      } else if (this.runningStatus == NOTE_OFF) {
+      } else if (this.runningStatus == (NOTE_OFF | midiCh)) {
         if (!this.IsDataByte(this.firstData)) {
           this.firstData = b;
         } else {
           this.noteOff(this.firstData);
           this.firstData = DATA_BYTE_INVALID;
         }
-      } else if (this.runningStatus == CONTROL_CHANGE) {
+      } else if (this.runningStatus == (CONTROL_CHANGE | midiCh)) {
         if (!this.IsDataByte(this.firstData)) {
           this.firstData = b;
         } else {
