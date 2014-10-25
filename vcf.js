@@ -23,7 +23,7 @@ var VCF = function() {
     if (r == 0) {
       r = 1;
     }
-    var q = Math.pow(Math.sqrt(2), (r - 64) / 63);
+    var q = Math.pow(Math.sqrt(2), (r - 40) / 40);
 
     var f0OverFs = (MAX_FREQ * Math.pow(2, -10 + (c / 12))) / SAMPLING_RATE;
     var w0 = 2 * Math.PI * f0OverFs;

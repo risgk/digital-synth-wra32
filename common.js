@@ -1,16 +1,7 @@
-const OPTION_BLACK_KEY_PROGRAM_CHANGE = true;
-
 const MIDI_CH         = 0;
 const MAX_FREQ        = 20000;
 const NOTE_NUMBER_MIN = 0;
 const NOTE_NUMBER_MAX = 127;
-
-const PROGRAM_SIZE = 16;
-const SUB_OSC_LEAD = 0;
-const SAW_LEAD     = 1;
-const SQUERE_LEAD  = 2;
-const SYNTH_PAD    = 3;
-const SYNTH_BASS   = 4;
 
 const SAWTOOTH = 0;
 const SQUARE   = 1;
@@ -26,7 +17,6 @@ const STATUS_BYTE_MIN       = 0x80;
 const NOTE_ON               = (0x90 | MIDI_CH);
 const NOTE_OFF              = (0x80 | MIDI_CH);
 const CONTROL_CHANGE        = (0xB0 | MIDI_CH);
-const PROGRAM_CHANGE        = (0xC0 | MIDI_CH);
 const SYSTEM_MESSAGE_MIN    = 0xF0;
 const SYSTEM_EXCLUSIVE      = 0xF0;
 const TIME_CODE             = 0xF1;

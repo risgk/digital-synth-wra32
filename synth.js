@@ -37,8 +37,6 @@ var Synth = function() {
           this.noteOff(this.firstData);
           this.firstData = DATA_BYTE_INVALID;
         }
-      } else if (this.runningStatus == PROGRAM_CHANGE) {
-        this.programChange(b);
       } else if (this.runningStatus == CONTROL_CHANGE) {
         if (!this.IsDataByte(this.firstData)) {
           this.firstData = b;
@@ -95,28 +93,6 @@ var Synth = function() {
   }
 
   this.noteOn = function(noteNumber) {
-    if (OPTION_BLACK_KEY_PROGRAM_CHANGE) {
-      if (noteNumber > 96) {
-        switch (noteNumber) {
-        case 97:  // C#7
-          this.programChange(0);
-          return;
-        case 99:  // D#7
-          this.programChange(1);
-          return;
-        case 102:  // F#7
-          this.programChange(2);
-          return;
-        case 104:  // G#7
-          this.programChange(3);
-          return;
-        case 106:  // A#7
-          this.programChange(4);
-          return;
-        }
-      }
-    }
-
     pitch2 = noteNumber + vco2.coarseTune();
     if (pitch2 < (NOTE_NUMBER_MIN + 64) ||
         pitch2 > (NOTE_NUMBER_MAX + 64)) {
@@ -288,31 +264,9 @@ var Synth = function() {
     eg.noteOff();
   }
 
-  this.programChange = function(programNumber) {
-    this.soundOff();
-    var i = programNumber * PROGRAM_SIZE;
-    vco1.setWaveform(programTable[i + 0]);
-    vco1.setCoarseTune(programTable[i + 1]);
-    vco2.setWaveform(programTable[i + 2]);
-    vco2.setCoarseTune(programTable[i + 3]);
-    vco2.setFineTune(programTable[i + 4]);
-    vco3.setWaveform(programTable[i + 5]);
-    vco3.setCoarseTune(programTable[i + 6]);
-    vco3.setFineTune(programTable[i + 7]);
-    vcf.setCutoffFrequency(programTable[i + 8]);
-    vcf.setResonance(programTable[i + 9]);
-    vcf.setEnvelopeAmount(programTable[i + 10]);
-    eg.setAttackTime(programTable[i + 11]);
-    eg.setDecayTime(programTable[i + 12]);
-    eg.setSustainLevel(programTable[i + 13]);
-    this.resetPhase();
-  }
-
   this.systemExclusive     = false;
   this.systemDataRemaining = 0;
   this.runningStatus       = STATUS_BYTE_INVALID;
   this.firstData           = DATA_BYTE_INVALID;
   this.noteNumber          = 60;
-
-  this.programChange(0);
 }

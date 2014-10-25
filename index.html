@@ -74,15 +74,15 @@ function resetControllers() {
   onChangeControlChange(41, 64 );
   onChangeControlChange(42, 0  );
   onChangeControlChange(43, 64 );
-  onChangeControlChange(44, 64 );
-  onChangeControlChange(45, 0  );
-  onChangeControlChange(46, 64 );
+  onChangeControlChange(44, 70 );
+  onChangeControlChange(45, 2  );
+  onChangeControlChange(46, 52 );
   onChangeControlChange(47, 64 );
-  onChangeControlChange(48, 120);
-  onChangeControlChange(49, 1  );
-  onChangeControlChange(50, 0  );
+  onChangeControlChange(48, 84 );
+  onChangeControlChange(49, 80 );
+  onChangeControlChange(50, 12 );
   onChangeControlChange(51, 0  );
-  onChangeControlChange(52, 0  );
+  onChangeControlChange(52, 80 );
   onChangeControlChange(53, 127);
 }
 
@@ -166,7 +166,7 @@ node.connect(audioContext.destination);
 <tr><td>VCO 3 Coarse Tune   </td><td><input id="inputCC46"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(46, value)"></td><td><span id="spanCC46">0</span></td></tr>
 <tr><td>VCO 3 Fine Tune     </td><td><input id="inputCC47"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(47, value)"></td><td><span id="spanCC47">0</span></td></tr>
 <tr><td>VCF Cutoff Frequency</td><td><input id="inputCC48"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(48, value)"></td><td><span id="spanCC48">0</span></td></tr>
-<tr><td>VCF Resonance       </td><td><input id="inputCC49"  type="range" min="1"  max="127" step="1" onchange="onChangeControlChange(49, value)"></td><td><span id="spanCC49">0</span></td></tr>
+<tr><td>VCF Resonance       </td><td><input id="inputCC49"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(49, value)"></td><td><span id="spanCC49">0</span></td></tr>
 <tr><td>VCF Envelope Amount </td><td><input id="inputCC50"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(50, value)"></td><td><span id="spanCC50">0</span></td></tr>
 <tr><td>EG Attack Time      </td><td><input id="inputCC51"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(51, value)"></td><td><span id="spanCC51">0</span></td></tr>
 <tr><td>EG Decay Time       </td><td><input id="inputCC52"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(52, value)"></td><td><span id="spanCC52">0</span></td></tr>
