@@ -34,12 +34,14 @@ var EG = function() {
     if (at > 120) {
       at = 120;
     }
-    var ar = 0.9999; // TODO
+    var as = 10 / Math.pow(10, (120 - at) / 40);
+    var ar = Math.pow(1 / 2, 1 / (SAMPLING_RATE * as));
     var dt = this.decayTime;
     if (dt > 120) {
       dt = 120;
     }
-    var dr = 0.9999; // TODO
+    var ds = 10 / Math.pow(10, (120 - dt) / 40);
+    var dr = Math.pow(1 / 32, 1 / (SAMPLING_RATE * ds));
     var sl = this.sustainLevel / 120;
     if (sl > 1) {
       sl = 1;
