@@ -1,7 +1,6 @@
 var EG = function() {
   const STATE_ATTACK  = 0;
   const STATE_DECAY   = 1;
-  const STATE_SUSTAIN = 2;
   const STATE_RELEASE = 3;
   const STATE_IDLE    = 4;
 
@@ -56,17 +55,10 @@ var EG = function() {
       }
       break;
     case STATE_DECAY:
-      this.level = this.level * dr;
-      if (this.level <= sl) {
-        this.state = STATE_SUSTAIN;
-        this.level = sl;
-      }
-      break;
-    case STATE_SUSTAIN:
-      this.level = sl;
+      this.level = sl - ((sl - this.level) * dr);
       break;
     case STATE_RELEASE:
-      this.level = this.level * dr;
+      this.level = 0 - ((0 - this.level) * dr);
       if (this.level <= 1 / 1024) {
         this.state = STATE_IDLE;
         this.level = 0;
