@@ -10,10 +10,10 @@
 
 ## Features
 
-- We recommend Google Chrome (Please enable Web MIDI API)
 - Using Web MIDI API and Web Audio API
-- 32 bit float audio (48 kHz in Google Chrome 38 for Windows)
+- We recommend Google Chrome (Please enable Web MIDI API)
 - Supporting MIDI IN
+- Supporting 32 bit float audio (48 kHz/32 bit in Google Chrome 38 for Windows)
 
 ## Synth Modules
 
@@ -30,14 +30,14 @@
     - Fine Tune: ..., -50(32), ..., 0(64), ..., +50(96), ... [cent]
 - VCF
     - Filter Type: LPF, Attenuation Slope: -12 [dB/oct]
-    - Cutoff Frequency: 20(0), ..., 5000(96), ..., 10000(108), ..., 20000(120) [Hz]
-    - Resonance: Q=0.7(0), ..., Q=1.4(48), ..., Q=2.8(96), ..., Q=4(120)
-    - Envelope Amount: 0(0), ..., 50(60), ..., 100(120) [%]
+    - Cutoff Frequency: 20(0), ..., 5000(96), ..., 10000(108), ..., 20000(120-127) [Hz]
+    - Resonance: Q=0.7(0), ..., Q=1.4(48), ..., Q=2.8(96), ..., Q=4(120-127)
+    - Envelope Amount: 0(0), ..., 50(60), ..., 100(120-127) [%]
 - VCA
 - EG
-    - Attack Time: 10(0), ..., 100(40), ..., 1000(80), ..., 10000(120) [ms]
-    - Decay Time: 10(0), ..., 100(40), ..., 1000(80), ..., 10000(120) [ms]
-    - Sustain Level: 0(0), ..., 50(60), ..., 100(120) [%]
+    - Attack Time: 10(0), ..., 100(40), ..., 1000(80), ..., 10000(120-127) [ms]
+    - Decay Time: 10(0), ..., 100(40), ..., 1000(80), ..., 10000(120-127) [ms]
+    - Sustain Level: 0(0), ..., 50(60), ..., 100(120-127) [%]
 
 ## MIDI Implementation Chart
 
@@ -47,7 +47,7 @@
     | Function                      | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
     | Basic        Default          | x             | 1             |                       |
-    | Channel      Changed          | x             | x             |                       |
+    | Channel      Changed          | x             | 1-16          | Memorized             |
     +-------------------------------+---------------+---------------+-----------------------+
     | Mode         Default          | x             | Mode 4 (M=1)  |                       |
     |              Messages         | x             | x             |                       |
