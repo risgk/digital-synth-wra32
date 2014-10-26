@@ -233,33 +233,23 @@ var Synth = function() {
   }
 
   this.setVCFResonance = function(value) {
-    this.soundOff();
     vcf.setResonance(value);
-    this.resetPhase();
   }
 
   this.setVCFEnvelopeAmount = function(value) {
-    this.soundOff();
     vcf.setEnvelopeAmount(value);
-    this.resetPhase();
   }
 
   this.setEGAttackTime = function(value) {
-    this.soundOff();
     eg.setAttackTime(value);
-    this.resetPhase();
   }
 
   this.setEGDecayTime = function(value) {
-    this.soundOff();
     eg.setDecayTime(value);
-    this.resetPhase();
   }
 
   this.setEGSustainLevel = function(value) {
-    this.soundOff();
     eg.setSustainLevel(value);
-    this.resetPhase();
   }
 
   this.allNotesOff = function(value) {
