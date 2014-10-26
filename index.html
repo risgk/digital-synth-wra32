@@ -27,6 +27,7 @@ var strage     = localStorage;
 var midi       = null;
 var midiInputs = null;
 var midiInput  = null;
+var midiIndex  = 0;
 
 navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
 
@@ -62,7 +63,8 @@ function onMIDIFailure(msg) {
 
 function onChangeInputPort(){
   var selectInputPort = document.getElementById("selectInputPort");
-  midiInput = midiInputs[selectInputPort.selectedIndex];
+  midiIndex = selectInputPort.selectedIndex;
+  midiInput = midiInputs[midiIndex];
   if (midiInput) {
     midiInput.onmidimessage = onMIDIMessage;
   }
@@ -85,11 +87,11 @@ function resetControllers() {
   onChangeControlChange(46, 52 );
   onChangeControlChange(47, 64 );
   onChangeControlChange(48, 84 );
-  onChangeControlChange(49, 80 );
+  onChangeControlChange(49, 24 );
   onChangeControlChange(50, 12 );
-  onChangeControlChange(51, 0  );
+  onChangeControlChange(51, 40 );
   onChangeControlChange(52, 80 );
-  onChangeControlChange(53, 127);
+  onChangeControlChange(53, 120);
 }
 
 function noteOn(noteNumber) {
@@ -223,19 +225,19 @@ node.connect(audioContext.destination);
 
 <table>
 <tr><td>VCO 1 Waveform      </td><td><input id="inputCC40"  type="range" min="0"  max="2"   step="1" onchange="onChangeControlChange(40, value)"></td><td><span id="spanCC40">-1</span></td></tr>
-<tr><td>VCO 1 Coarse Tune   </td><td><input id="inputCC41"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(41, value)"></td><td><span id="spanCC41">-1</span></td></tr>
+<tr><td>VCO 1 Coarse Tune   </td><td><input id="inputCC41"  type="range" min="16" max="112" step="1" onchange="onChangeControlChange(41, value)"></td><td><span id="spanCC41">-1</span></td></tr>
 <tr><td>VCO 2 Waveform      </td><td><input id="inputCC42"  type="range" min="0"  max="2"   step="1" onchange="onChangeControlChange(42, value)"></td><td><span id="spanCC42">-1</span></td></tr>
-<tr><td>VCO 2 Coarse Tune   </td><td><input id="inputCC43"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(43, value)"></td><td><span id="spanCC43">-1</span></td></tr>
-<tr><td>VCO 2 Fine Tune     </td><td><input id="inputCC44"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(44, value)"></td><td><span id="spanCC44">-1</span></td></tr>
+<tr><td>VCO 2 Coarse Tune   </td><td><input id="inputCC43"  type="range" min="16" max="112" step="1" onchange="onChangeControlChange(43, value)"></td><td><span id="spanCC43">-1</span></td></tr>
+<tr><td>VCO 2 Fine Tune     </td><td><input id="inputCC44"  type="range" min="32" max="96" step="1" onchange="onChangeControlChange(44, value)"></td><td><span id="spanCC44">-1</span></td></tr>
 <tr><td>VCO 3 Waveform      </td><td><input id="inputCC45"  type="range" min="0"  max="2"   step="1" onchange="onChangeControlChange(45, value)"></td><td><span id="spanCC45">-1</span></td></tr>
-<tr><td>VCO 3 Coarse Tune   </td><td><input id="inputCC46"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(46, value)"></td><td><span id="spanCC46">-1</span></td></tr>
-<tr><td>VCO 3 Fine Tune     </td><td><input id="inputCC47"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(47, value)"></td><td><span id="spanCC47">-1</span></td></tr>
+<tr><td>VCO 3 Coarse Tune   </td><td><input id="inputCC46"  type="range" min="16" max="112" step="1" onchange="onChangeControlChange(46, value)"></td><td><span id="spanCC46">-1</span></td></tr>
+<tr><td>VCO 3 Fine Tune     </td><td><input id="inputCC47"  type="range" min="32" max="96" step="1" onchange="onChangeControlChange(47, value)"></td><td><span id="spanCC47">-1</span></td></tr>
 <tr><td>VCF Cutoff Frequency</td><td><input id="inputCC48"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(48, value)"></td><td><span id="spanCC48">-1</span></td></tr>
 <tr><td>VCF Resonance       </td><td><input id="inputCC49"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(49, value)"></td><td><span id="spanCC49">-1</span></td></tr>
 <tr><td>VCF Envelope Amount </td><td><input id="inputCC50"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(50, value)"></td><td><span id="spanCC50">-1</span></td></tr>
-<tr><td>EG Attack Time      </td><td><input id="inputCC51"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(51, value)"></td><td><span id="spanCC51">-1</span></td></tr>
-<tr><td>EG Decay Time       </td><td><input id="inputCC52"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(52, value)"></td><td><span id="spanCC52">-1</span></td></tr>
-<tr><td>EG Sustain Level    </td><td><input id="inputCC53"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(53, value)"></td><td><span id="spanCC53">-1</span></td></tr>
+<tr><td>EG Attack Time      </td><td><input id="inputCC51"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(51, value)"></td><td><span id="spanCC51">-1</span></td></tr>
+<tr><td>EG Decay Time       </td><td><input id="inputCC52"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(52, value)"></td><td><span id="spanCC52">-1</span></td></tr>
+<tr><td>EG Sustain Level    </td><td><input id="inputCC53"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(53, value)"></td><td><span id="spanCC53">-1</span></td></tr>
 </table>
 
 <p><input id="inputReset" type="button" value="Reset Controllers" onclick ="resetControllers()"></p>
