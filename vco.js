@@ -48,7 +48,7 @@ var VCO = function() {
       n = i + 60;
       cent = (n * 100) - 6900;
       hz = 440 * Math.pow(2, cent / 1200);
-      that.freqTableC4toB4[i] = Math.floor((hz * CYCLE_RESOLUTION / SAMPLING_RATE) / 32) * 32;
+      that.freqTableC4toB4[i] = hz * CYCLE_RESOLUTION / SAMPLING_RATE;
     }
   }();
 
