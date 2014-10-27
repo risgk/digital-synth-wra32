@@ -1,8 +1,8 @@
 var EG = function() {
-  const STATE_ATTACK  = 0;
-  const STATE_DECAY   = 1;
-  const STATE_RELEASE = 3;
-  const STATE_IDLE    = 4;
+  const STATE_ATTACK        = 0;
+  const STATE_DECAY_SUSTAIN = 1;
+  const STATE_RELEASE       = 3;
+  const STATE_IDLE          = 4;
 
   this.setAttackTime = function(attackTime) {
     this.attackTime = attackTime;
@@ -34,7 +34,7 @@ var EG = function() {
       at = 120;
     }
     var as = 10 / Math.pow(10, (120 - at) / 40);
-    var ar = Math.pow(1 / 2, 1 / (SAMPLING_RATE * as));
+    var ar = Math.pow(1 / 3, 1 / (SAMPLING_RATE * as));
     var dt = this.decayTime;
     if (dt > 120) {
       dt = 120;
@@ -48,14 +48,20 @@ var EG = function() {
 
     switch (this.state) {
     case STATE_ATTACK:
-      this.level = 2 - ((2 - this.level) * ar);
+      this.level = 1.5 - ((1.5 - this.level) * ar);
       if (this.level >= 1) {
-        this.state = STATE_DECAY;
+        this.state = STATE_DECAY_SUSTAIN;
         this.level = 1;
       }
       break;
-    case STATE_DECAY:
-      this.level = sl - ((sl - this.level) * dr);
+    case STATE_DECAY_SUSTAIN:
+      if (this.level > sl) {
+        if ((this.level - sl) <= (1 / 1024)) {
+          this.level = sl;
+        } else {
+          this.level = sl - ((sl - this.level) * dr);
+        }
+      }
       break;
     case STATE_RELEASE:
       this.level = 0 - ((0 - this.level) * dr);

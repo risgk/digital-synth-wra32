@@ -7,8 +7,6 @@ var eg = new EG();
 var mixer = new Mixer();
 
 var Synth = function() {
-  that = this;
-
   this.receive = function(array) {
     console.log(array);
     for (var i = 0; i < array.length; i++) {

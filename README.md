@@ -1,10 +1,11 @@
-# Digital Synth WRA32 0.2.0
+# Digital Synth WRA32 0.3.0
 
-2014-10-26 ISGK Instruments  
+2014-10-27 ISGK Instruments  
 [https://github.com/risgk/digital-synth-wra32](https://github.com/risgk/digital-synth-wra32)
 
 ## What's New
 
+- v0.3.0: Improve EG; Change calculation of VCO frequency
 - v0.2.0: Improve EG; Enable realtime control of EG and VCF
 
 ## Concept
@@ -45,8 +46,8 @@
 
 ## MIDI Implementation Chart
 
-      ISGK Instruments                                                Date: 2014-10-26       
-      Model: Digital Synth WRA32      MIDI Implementation Chart       Version: 0.2.0         
+      ISGK Instruments                                                Date: 2014-10-27       
+      Model: Digital Synth WRA32      MIDI Implementation Chart       Version: 0.3.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function                      | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
