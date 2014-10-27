@@ -3,7 +3,7 @@ var VCO = function() {
   const MAX_OVERTONE      = 64;
   const SAMPLES_PER_CYCLE = 2048;
 
-  var that = this;
+  that = this;
 
   var generateWaveTable = function(waveTables, f) {
     for (var m = 1; m <= MAX_OVERTONE; m++) {
@@ -42,20 +42,15 @@ var VCO = function() {
     return 0;
   });
 
-  this.freqTable = [];
+  this.freqTableC4toB4 = [];
   var generatefreqTable = function() {
-    var freqC4toB4 = [];
     for (var i = 0; i <= 11; i++) {
       n = i + 60;
       cent = (n * 100) - 6900;
       hz = 440 * Math.pow(2, cent / 1200);
-      freqC4toB4[i] = Math.floor((hz * CYCLE_RESOLUTION / SAMPLING_RATE) / 32) * 32;
+      that.freqTableC4toB4[i] = Math.floor((hz * CYCLE_RESOLUTION / SAMPLING_RATE) / 32) * 32;
     }
-    for (var n = 0; n <= 127; n++) {
-      that.freqTable[n] = Math.floor(freqC4toB4[n % 12] * Math.pow(2, Math.floor(n / 12) - 5));
-    }
-  }
-  generatefreqTable();
+  }();
 
   this.resetPhase = function() {
     this.phase = 0;
@@ -118,7 +113,9 @@ var VCO = function() {
 
   this.updateFreq = function() {
     var noteNumber = this.noteNumber + this.courseTune - 64;
-    this.freq = Math.floor(this.freqTable[noteNumber] * Math.pow(2, (this.fineTune - 64) / 768));
+    var base = Math.floor(this.freqTableC4toB4[noteNumber % 12] *
+                          Math.pow(2, (this.fineTune - 64) / 768) / 32) * 32;
+    this.freq = base * Math.pow(2, Math.floor(noteNumber / 12) - 5);
     this.overtone = Math.floor((MAX_FREQ * CYCLE_RESOLUTION) / (this.freq * SAMPLING_RATE));
     if (this.overtone > MAX_OVERTONE) {
       this.overtone = MAX_OVERTONE;
