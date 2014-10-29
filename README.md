@@ -5,6 +5,7 @@
 
 ## What's New
 
+- v0.3.2: Add the check of Web MIDI API support
 - v0.3.1: Improve calculation of VCO frequency
 - v0.3.0: Improve EG; Change calculation of VCO frequency
 - v0.2.0: Improve EG; Enable realtime control of EG and VCF
