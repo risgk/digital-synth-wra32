@@ -29,7 +29,11 @@ var midiInputs = null;
 var midiInput  = null;
 var midiIndex  = 0;
 
-navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
+if (navigator.requestMIDIAccess) {
+  navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
+} else {
+  console.log("No MIDI support present in your browser.");
+}
 
 function onMIDIMessage(event) {
   synth.receive(event.data)
