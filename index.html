@@ -18,12 +18,81 @@ td.keyh {
   border: 2px solid #999;
 }
 </style>
-<script>
-var midiCh = 0;
-</script>
 <script src="common.js"></script>
 <script>
-var strage     = localStorage;
+var midiCh    = 0;
+var volume    = 0;
+var transpose = 0;
+
+window.onload = function() {
+  if (navigator.requestMIDIAccess) {
+    navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
+  } else {
+    console.log("No MIDI support present in your browser.");
+  }
+
+  var result = loadParameters();
+  if (!result) {
+    onChangeChannel(1);
+    onChangeVolume(100);
+    onChangeTranspose(0);
+    resetControllers();
+  }
+};
+
+function loadParameters() {
+  var value;
+  for (var i = 40; i <= 53; i++) {
+    value = localStorage.getItem("keyCC" + String(i));
+    if (!value) {
+      return false;
+    }
+    onChangeControlChange(i, value);
+  }
+
+  value = localStorage.getItem("keyChannel");
+  if (!value) {
+    return false;
+  }
+  onChangeChannel(value);
+
+  value = localStorage.getItem("keyVolume");
+  if (!value) {
+    return false;
+  }
+  onChangeVolume(value);
+
+  value = localStorage.getItem("keyTranspose");
+  if (!value) {
+    return false;
+  }
+  onChangeTranspose(value);
+
+  return true;
+}
+
+function onChangeChannel(value) {
+  document.getElementById("inputChannel").value = parseInt(value);
+  document.getElementById("spanChannel").innerHTML = value;
+  localStorage.setItem("keyChannel", value);
+  midiCh = parseInt(value) - 1;
+}
+
+function onChangeVolume(value) {
+  document.getElementById("inputVolume").value = parseInt(value);
+  document.getElementById("spanVolume").innerHTML = value;
+  localStorage.setItem("keyVolume", value);
+  volume = parseInt(value);
+}
+
+function onChangeTranspose(value) {
+  document.getElementById("inputTranspose").value = parseInt(value);
+  document.getElementById("spanTranspose").innerHTML = value;
+  localStorage.setItem("keyTranspose", value);
+  transpose = parseInt(value);
+}
+</script>
+<script>
 var midi       = null;
 var midiInputs = null;
 var midiInput  = null;
@@ -71,7 +140,7 @@ function onChangeInputPort(){
 function onChangeControlChange(number, value) {
   document.getElementById("inputCC" + String(number)).value = parseInt(value);
   document.getElementById("spanCC" + String(number)).innerHTML = value;
-  strage.setItem("keyCC" + String(number), value);
+  localStorage.setItem("keyCC" + String(number), value);
   synth.receive([(CONTROL_CHANGE | midiCh), number, parseInt(value)]);
 }
 
@@ -99,22 +168,12 @@ function noteOn(noteNumber) {
 function noteOff(noteNumber) {
   synth.receive([(NOTE_OFF | midiCh), noteNumber + transpose, 0]);
 }
-
-function onChangeChannel(value) {
-  document.getElementById("inputChannel").value = parseInt(value);
-  document.getElementById("spanChannel").innerHTML = value;
-  strage.setItem("keyChannel", value);
-  midiCh = parseInt(value) - 1;
-}
 </script>
 <script>
-
 var audioContext = new AudioContext();
 var SAMPLING_RATE = audioContext.sampleRate;
 var node = audioContext.createScriptProcessor();
 var bufferSize = node.bufferSize;
-var volume = 0;
-var transpose = 0;
 
 node.onaudioprocess = onAudioProcess;
 
@@ -125,68 +184,6 @@ function onAudioProcess(event) {
     bufferL[i] = bufferR[i] = synth.clock() * 0.5 * (Math.pow(volume, 2) / 16129);
   }
 }
-
-function onChangeVolume(value) {
-  document.getElementById("inputVolume").value = parseInt(value);
-  document.getElementById("spanVolume").innerHTML = value;
-  strage.setItem("keyVolume", value);
-  volume = parseInt(value);
-}
-
-function onChangeTranspose(value) {
-  document.getElementById("inputTranspose").value = parseInt(value);
-  document.getElementById("spanTranspose").innerHTML = value;
-  strage.setItem("keyTranspose", value);
-  transpose = parseInt(value);
-}
-
-function loadParameters() {
-  var value;
-  for (var i = 40; i <= 53; i++) {
-    value = strage.getItem("keyCC" + String(i));
-    if (!value) {
-      return false;
-    }
-    onChangeControlChange(i, value);
-  }
-
-  value = strage.getItem("keyChannel");
-  if (!value) {
-    return false;
-  }
-  onChangeChannel(value);
-
-  value = strage.getItem("keyVolume");
-  if (!value) {
-    return false;
-  }
-  onChangeVolume(value);
-
-  value = strage.getItem("keyTranspose");
-  if (!value) {
-    return false;
-  }
-  onChangeTranspose(value);
-
-  return true;
-}
-
-window.onload = function() {
-  if (navigator.requestMIDIAccess) {
-    navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
-  } else {
-    console.log("No MIDI support present in your browser.");
-  }
-
-  var result = loadParameters();
-  if (!result) {
-    resetControllers();
-    onChangeChannel(1);
-    onChangeVolume(100);
-    onChangeTranspose(0);
-  }
-};
-
 </script>
 <script src="vco.js"></script>
 <script src="vcf.js"></script>
@@ -195,11 +192,9 @@ window.onload = function() {
 <script src="mixer.js"></script>
 <script src="synth.js"></script>
 <script>
-
 var synth = new Synth();
 
 node.connect(audioContext.destination);
-
 </script>
 </head>
 <body>
@@ -212,12 +207,13 @@ node.connect(audioContext.destination);
 <table>
 <tr>
 <td>MIDI IN</td>
-<td><select id="selectInputPort" size="1" onchange="onChangeInputPort()"></select></td>
+<td colspan="2"><select id="selectInputPort" size="1" onchange="onChangeInputPort()"></select></td>
 </tr>
 <tr>
 <td>Basic Channel</td>
 <td><input id="inputChannel" type="range" min="1" max="16"  step="1" onchange="onChangeChannel(value)"></td><td><span id="spanChannel">-1</span></td>
 </tr>
+<tr>
 <td>Volume</td>
 <td><input id="inputVolume"  type="range" min="0" max="127" step="1" onchange="onChangeVolume(value)" ></td><td><span id="spanVolume" >-1</span></td>
 </tr>
@@ -232,10 +228,10 @@ node.connect(audioContext.destination);
 <tr><td>VCO 1 Coarse Tune   </td><td><input id="inputCC41"  type="range" min="16" max="112" step="1" onchange="onChangeControlChange(41, value)"></td><td><span id="spanCC41">-1</span></td></tr>
 <tr><td>VCO 2 Waveform      </td><td><input id="inputCC42"  type="range" min="0"  max="2"   step="1" onchange="onChangeControlChange(42, value)"></td><td><span id="spanCC42">-1</span></td></tr>
 <tr><td>VCO 2 Coarse Tune   </td><td><input id="inputCC43"  type="range" min="16" max="112" step="1" onchange="onChangeControlChange(43, value)"></td><td><span id="spanCC43">-1</span></td></tr>
-<tr><td>VCO 2 Fine Tune     </td><td><input id="inputCC44"  type="range" min="32" max="96" step="1" onchange="onChangeControlChange(44, value)"></td><td><span id="spanCC44">-1</span></td></tr>
+<tr><td>VCO 2 Fine Tune     </td><td><input id="inputCC44"  type="range" min="32" max="96"  step="1" onchange="onChangeControlChange(44, value)"></td><td><span id="spanCC44">-1</span></td></tr>
 <tr><td>VCO 3 Waveform      </td><td><input id="inputCC45"  type="range" min="0"  max="2"   step="1" onchange="onChangeControlChange(45, value)"></td><td><span id="spanCC45">-1</span></td></tr>
 <tr><td>VCO 3 Coarse Tune   </td><td><input id="inputCC46"  type="range" min="16" max="112" step="1" onchange="onChangeControlChange(46, value)"></td><td><span id="spanCC46">-1</span></td></tr>
-<tr><td>VCO 3 Fine Tune     </td><td><input id="inputCC47"  type="range" min="32" max="96" step="1" onchange="onChangeControlChange(47, value)"></td><td><span id="spanCC47">-1</span></td></tr>
+<tr><td>VCO 3 Fine Tune     </td><td><input id="inputCC47"  type="range" min="32" max="96"  step="1" onchange="onChangeControlChange(47, value)"></td><td><span id="spanCC47">-1</span></td></tr>
 <tr><td>VCF Cutoff Frequency</td><td><input id="inputCC48"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(48, value)"></td><td><span id="spanCC48">-1</span></td></tr>
 <tr><td>VCF Resonance       </td><td><input id="inputCC49"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(49, value)"></td><td><span id="spanCC49">-1</span></td></tr>
 <tr><td>VCF Envelope Amount </td><td><input id="inputCC50"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(50, value)"></td><td><span id="spanCC50">-1</span></td></tr>
