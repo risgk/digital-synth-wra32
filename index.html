@@ -96,7 +96,6 @@ function onChangeTranspose(value) {
 var midi       = null;
 var midiInputs = null;
 var midiInput  = null;
-var midiIndex  = 0;
 
 function onMIDIMessage(event) {
   synth.receive(event.data)
@@ -130,8 +129,7 @@ function onMIDIFailure(msg) {
 
 function onChangeInputPort(){
   var selectInputPort = document.getElementById("selectInputPort");
-  midiIndex = selectInputPort.selectedIndex;
-  midiInput = midiInputs[midiIndex];
+  midiInput = midiInputs[selectInputPort.selectedIndex];
   if (midiInput) {
     midiInput.onmidimessage = onMIDIMessage;
   }
