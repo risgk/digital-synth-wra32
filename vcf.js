@@ -3,15 +3,15 @@
 var VCF = function() {
   this.setCutoffFrequency = function(cutoffFrequency) {
     this.cutoffFrequency = cutoffFrequency;
-  }
+  };
 
   this.setResonance = function(resonance) {
     this.resonance = resonance;
-  }
+  };
 
   this.setEnvelopeAmount = function(envelopeAmount) {
     this.envelopeAmount = envelopeAmount;
-  }
+  };
 
   this.clock = function(a, k) {
     var e = this.envelopeAmount;
@@ -52,7 +52,7 @@ var VCF = function() {
     this.y1 = y0;
 
     return y0;
-  }
+  };
 
   this.cutoffFrequency = 120;
   this.resonance       = 0;
@@ -62,4 +62,3 @@ var VCF = function() {
   this.y1              = 0;
   this.y2              = 0;
 };
-

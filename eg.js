@@ -6,27 +6,27 @@ var EG = function() {
 
   this.setAttackTime = function(attackTime) {
     this.attackTime = attackTime;
-  }
+  };
 
   this.setDecayTime = function(decayTime) {
     this.decayTime = decayTime;
-  }
+  };
 
   this.setSustainLevel = function(sustainLevel) {
     this.sustainLevel = sustainLevel;
-  }
+  };
 
   this.noteOn = function() {
     this.state = STATE_ATTACK;
-  }
+  };
 
   this.noteOff = function() {
     this.state = STATE_RELEASE;
-  }
+  };
 
   this.soundOff = function() {
     this.state = STATE_IDLE;
-  }
+  };
 
   this.clock = function() {
     var at = this.attackTime;
@@ -76,7 +76,7 @@ var EG = function() {
     }
 
     return this.level;
-  }
+  };
 
   this.attackTime   = 0;
   this.decayTime    = 0;
