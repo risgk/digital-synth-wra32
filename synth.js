@@ -93,6 +93,12 @@ var Synth = function() {
   };
 
   this.noteOn = function(noteNumber) {
+    pitch1 = noteNumber + vco1.coarseTune();
+    if (pitch1 < (NOTE_NUMBER_MIN + 64) ||
+        pitch1 > (NOTE_NUMBER_MAX + 64)) {
+      return;
+    }
+
     pitch2 = noteNumber + vco2.coarseTune();
     if (pitch2 < (NOTE_NUMBER_MIN + 64) ||
         pitch2 > (NOTE_NUMBER_MAX + 64)) {
