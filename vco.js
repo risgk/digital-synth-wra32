@@ -17,7 +17,7 @@ var VCO = function() {
       }
       waveTables[m] = waveTable;
     }
-  }
+  };
 
   this.waveTablesSawtooth = [];
   generateWaveTable(this.waveTablesSawtooth, function(t, k) {
@@ -54,7 +54,7 @@ var VCO = function() {
 
   this.resetPhase = function() {
     this.phase = 0;
-  }
+  };
 
   this.setWaveform = function(waveform) {
     switch (waveform) {
@@ -68,26 +68,26 @@ var VCO = function() {
       this.waveTables = this.waveTablesTriangle;
       break;
     }
-  }
+  };
 
   this.setCoarseTune = function(coarseTune) {
     this.courseTune = coarseTune;
     this.updateFreq();
-  }
+  };
 
   this.coarseTune = function() {
     return this.courseTune;
-  }
+  };
 
   this.setFineTune = function(fineTune) {
     this.fineTune = fineTune;
     this.updateFreq();
-  }
+  };
 
   this.noteOn = function(noteNumber) {
     this.noteNumber = noteNumber;
     this.updateFreq();
-  }
+  };
 
   this.clock = function() {
     this.phase += this.freq;
@@ -109,7 +109,7 @@ var VCO = function() {
     level = ((currData * currWeight) + (nextData * nextWeight)) / (CYCLE_RESOLUTION / SAMPLES_PER_CYCLE);
 
     return level;
-  }
+  };
 
   this.updateFreq = function() {
     var noteNumber = this.noteNumber + this.courseTune - 64;
@@ -120,7 +120,7 @@ var VCO = function() {
     if (this.overtone > MAX_OVERTONE) {
       this.overtone = MAX_OVERTONE;
     }
-  }
+  };
 
   this.courseTune  = 64;
   this.fineTune    = 64;
@@ -129,4 +129,4 @@ var VCO = function() {
   this.freq        = 0;
   this.overtone    = 1;
   this.waveTables  = this.waveTablesSawtooth;
-}
+};

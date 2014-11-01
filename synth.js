@@ -12,7 +12,7 @@ var Synth = function() {
     for (var i = 0; i < array.length; i++) {
       this.receiveMIDIByte(array[i]);
     }
-  }
+  };
 
   this.receiveMIDIByte = function(b) {
     if (this.IsDataByte(b)) {
@@ -66,7 +66,7 @@ var Synth = function() {
         break;
       }
     }
-  }
+  };
 
   this.clock = function() {
     var level = mixer.clock(vco1.clock(), vco2.clock(), vco3.clock());
@@ -74,25 +74,31 @@ var Synth = function() {
     level = vcf.clock(level, egOutput);
     level = vca.clock(level, egOutput);
     return level;
-  }
+  };
 
   this.IsRealTimeMessage = function(b) {
     return b >= REAL_TIME_MESSAGE_MIN;
-  }
+  };
 
   this.IsSystemMessage = function(b) {
     return b >= SYSTEM_MESSAGE_MIN;
-  }
+  };
 
   this.IsStatusByte = function(b) {
     return b >= STATUS_BYTE_MIN;
-  }
+  };
 
   this.IsDataByte = function(b) {
     return b <= DATA_BYTE_MAX;
-  }
+  };
 
   this.noteOn = function(noteNumber) {
+    pitch1 = noteNumber + vco1.coarseTune();
+    if (pitch1 < (NOTE_NUMBER_MIN + 64) ||
+        pitch1 > (NOTE_NUMBER_MAX + 64)) {
+      return;
+    }
+
     pitch2 = noteNumber + vco2.coarseTune();
     if (pitch2 < (NOTE_NUMBER_MIN + 64) ||
         pitch2 > (NOTE_NUMBER_MAX + 64)) {
@@ -110,23 +116,23 @@ var Synth = function() {
     vco2.noteOn(this.noteNumber);
     vco3.noteOn(this.noteNumber);
     eg.noteOn();
-  }
+  };
 
   this.noteOff = function(noteNumber) {
     if (noteNumber == this.noteNumber) {
       eg.noteOff();
     }
-  }
+  };
 
   this.soundOff = function() {
     eg.soundOff();
-  }
+  };
 
   this.resetPhase = function() {
     vco1.resetPhase();
     vco2.resetPhase();
     vco3.resetPhase();
-  }
+  };
 
   this.controlChange = function(controllerNumber, value) {
     switch (controllerNumber) {
@@ -176,87 +182,87 @@ var Synth = function() {
       this.setEGSustainLevel(value);
       break;
     }
-  }
+  };
 
   this.setVCO1Waveform = function(value) {
     this.soundOff();
     vco1.setWaveform(value);
     this.resetPhase();
-  }
+  };
 
   this.setVCO1CoarseTune = function(value) {
     this.soundOff();
     vco1.setCoarseTune(value);
     this.resetPhase();
-  }
+  };
 
   this.setVCO2Waveform = function(value) {
     this.soundOff();
     vco2.setWaveform(value);
     this.resetPhase();
-  }
+  };
 
   this.setVCO2CoarseTune = function(value) {
     this.soundOff();
     vco2.setCoarseTune(value);
     this.resetPhase();
-  }
+  };
 
   this.setVCO2FineTune = function(value) {
     this.soundOff();
     vco2.setFineTune(value);
     this.resetPhase();
-  }
+  };
 
   this.setVCO3Waveform = function(value) {
     this.soundOff();
     vco3.setWaveform(value);
     this.resetPhase();
-  }
+  };
 
   this.setVCO3CoarseTune = function(value) {
     this.soundOff();
     vco3.setCoarseTune(value);
     this.resetPhase();
-  }
+  };
 
   this.setVCO3FineTune = function(value) {
     this.soundOff();
     vco3.setFineTune(value);
     this.resetPhase();
-  }
+  };
 
   this.setVCFCutoffFrequency = function(value) {
     vcf.setCutoffFrequency(value);
-  }
+  };
 
   this.setVCFResonance = function(value) {
     vcf.setResonance(value);
-  }
+  };
 
   this.setVCFEnvelopeAmount = function(value) {
     vcf.setEnvelopeAmount(value);
-  }
+  };
 
   this.setEGAttackTime = function(value) {
     eg.setAttackTime(value);
-  }
+  };
 
   this.setEGDecayTime = function(value) {
     eg.setDecayTime(value);
-  }
+  };
 
   this.setEGSustainLevel = function(value) {
     eg.setSustainLevel(value);
-  }
+  };
 
   this.allNotesOff = function(value) {
     eg.noteOff();
-  }
+  };
 
   this.systemExclusive     = false;
   this.systemDataRemaining = 0;
   this.runningStatus       = STATUS_BYTE_INVALID;
   this.firstData           = DATA_BYTE_INVALID;
   this.noteNumber          = 60;
-}
+};
