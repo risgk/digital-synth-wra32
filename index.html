@@ -29,12 +29,6 @@ var midiInputs = null;
 var midiInput  = null;
 var midiIndex  = 0;
 
-if (navigator.requestMIDIAccess) {
-  navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
-} else {
-  console.log("No MIDI support present in your browser.");
-}
-
 function onMIDIMessage(event) {
   synth.receive(event.data)
 }
@@ -178,6 +172,12 @@ function loadParameters() {
 }
 
 window.onload = function() {
+  if (navigator.requestMIDIAccess) {
+    navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
+  } else {
+    console.log("No MIDI support present in your browser.");
+  }
+
   var result = loadParameters();
   if (!result) {
     resetControllers();
