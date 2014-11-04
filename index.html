@@ -42,7 +42,7 @@ window.onload = function() {
 
 function loadParameters() {
   var value;
-  for (var i = 40; i <= 53; i++) {
+  for (var i = 14; i <= 27; i++) {
     value = localStorage.getItem("keyCC" + String(i));
     if (!value) {
       return false;
@@ -143,24 +143,24 @@ function onChangeControlChange(number, value) {
 }
 
 function resetControllers() {
-  onChangeControlChange(40, 0  );
-  onChangeControlChange(41, 64 );
-  onChangeControlChange(42, 0  );
-  onChangeControlChange(43, 64 );
-  onChangeControlChange(44, 70 );
-  onChangeControlChange(45, 2  );
-  onChangeControlChange(46, 52 );
-  onChangeControlChange(47, 64 );
-  onChangeControlChange(48, 84 );
-  onChangeControlChange(49, 48 );
-  onChangeControlChange(50, 12 );
-  onChangeControlChange(51, 20 );
-  onChangeControlChange(52, 80 );
-  onChangeControlChange(53, 120);
+  onChangeControlChange(14, 0  );
+  onChangeControlChange(15, 64 );
+  onChangeControlChange(16, 0  );
+  onChangeControlChange(17, 64 );
+  onChangeControlChange(18, 70 );
+  onChangeControlChange(19, 2  );
+  onChangeControlChange(20, 52 );
+  onChangeControlChange(21, 64 );
+  onChangeControlChange(22, 84 );
+  onChangeControlChange(23, 48 );
+  onChangeControlChange(24, 12 );
+  onChangeControlChange(25, 20 );
+  onChangeControlChange(26, 80 );
+  onChangeControlChange(27, 120);
 }
 
 function noteOn(noteNumber) {
-  synth.receive([(NOTE_ON | midiCh), noteNumber + transpose, 127]);
+  synth.receive([(NOTE_ON | midiCh), noteNumber + transpose, 64]);
 }
 
 function noteOff(noteNumber) {
@@ -222,20 +222,20 @@ node.connect(audioContext.destination);
 <h2>Controllers</h2>
 
 <table>
-<tr><td>VCO 1 Waveform      </td><td><input id="inputCC40"  type="range" min="0"  max="2"   step="1" onchange="onChangeControlChange(40, value)"></td><td><span id="spanCC40">-1</span></td></tr>
-<tr><td>VCO 1 Coarse Tune   </td><td><input id="inputCC41"  type="range" min="16" max="112" step="1" onchange="onChangeControlChange(41, value)"></td><td><span id="spanCC41">-1</span></td></tr>
-<tr><td>VCO 2 Waveform      </td><td><input id="inputCC42"  type="range" min="0"  max="2"   step="1" onchange="onChangeControlChange(42, value)"></td><td><span id="spanCC42">-1</span></td></tr>
-<tr><td>VCO 2 Coarse Tune   </td><td><input id="inputCC43"  type="range" min="16" max="112" step="1" onchange="onChangeControlChange(43, value)"></td><td><span id="spanCC43">-1</span></td></tr>
-<tr><td>VCO 2 Fine Tune     </td><td><input id="inputCC44"  type="range" min="32" max="96"  step="1" onchange="onChangeControlChange(44, value)"></td><td><span id="spanCC44">-1</span></td></tr>
-<tr><td>VCO 3 Waveform      </td><td><input id="inputCC45"  type="range" min="0"  max="2"   step="1" onchange="onChangeControlChange(45, value)"></td><td><span id="spanCC45">-1</span></td></tr>
-<tr><td>VCO 3 Coarse Tune   </td><td><input id="inputCC46"  type="range" min="16" max="112" step="1" onchange="onChangeControlChange(46, value)"></td><td><span id="spanCC46">-1</span></td></tr>
-<tr><td>VCO 3 Fine Tune     </td><td><input id="inputCC47"  type="range" min="32" max="96"  step="1" onchange="onChangeControlChange(47, value)"></td><td><span id="spanCC47">-1</span></td></tr>
-<tr><td>VCF Cutoff Frequency</td><td><input id="inputCC48"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(48, value)"></td><td><span id="spanCC48">-1</span></td></tr>
-<tr><td>VCF Resonance       </td><td><input id="inputCC49"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(49, value)"></td><td><span id="spanCC49">-1</span></td></tr>
-<tr><td>VCF Envelope Amount </td><td><input id="inputCC50"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(50, value)"></td><td><span id="spanCC50">-1</span></td></tr>
-<tr><td>EG Attack Time      </td><td><input id="inputCC51"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(51, value)"></td><td><span id="spanCC51">-1</span></td></tr>
-<tr><td>EG Decay Time       </td><td><input id="inputCC52"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(52, value)"></td><td><span id="spanCC52">-1</span></td></tr>
-<tr><td>EG Sustain Level    </td><td><input id="inputCC53"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(53, value)"></td><td><span id="spanCC53">-1</span></td></tr>
+<tr><td>VCO 1 Waveform      </td><td><input id="inputCC14"  type="range" min="0"  max="2"   step="1" onchange="onChangeControlChange(14, value)"></td><td><span id="spanCC14">-1</span></td></tr>
+<tr><td>VCO 1 Coarse Tune   </td><td><input id="inputCC15"  type="range" min="16" max="112" step="1" onchange="onChangeControlChange(15, value)"></td><td><span id="spanCC15">-1</span></td></tr>
+<tr><td>VCO 2 Waveform      </td><td><input id="inputCC16"  type="range" min="0"  max="2"   step="1" onchange="onChangeControlChange(16, value)"></td><td><span id="spanCC16">-1</span></td></tr>
+<tr><td>VCO 2 Coarse Tune   </td><td><input id="inputCC17"  type="range" min="16" max="112" step="1" onchange="onChangeControlChange(17, value)"></td><td><span id="spanCC17">-1</span></td></tr>
+<tr><td>VCO 2 Fine Tune     </td><td><input id="inputCC18"  type="range" min="32" max="96"  step="1" onchange="onChangeControlChange(18, value)"></td><td><span id="spanCC18">-1</span></td></tr>
+<tr><td>VCO 3 Waveform      </td><td><input id="inputCC19"  type="range" min="0"  max="2"   step="1" onchange="onChangeControlChange(19, value)"></td><td><span id="spanCC19">-1</span></td></tr>
+<tr><td>VCO 3 Coarse Tune   </td><td><input id="inputCC20"  type="range" min="16" max="112" step="1" onchange="onChangeControlChange(20, value)"></td><td><span id="spanCC20">-1</span></td></tr>
+<tr><td>VCO 3 Fine Tune     </td><td><input id="inputCC21"  type="range" min="32" max="96"  step="1" onchange="onChangeControlChange(21, value)"></td><td><span id="spanCC21">-1</span></td></tr>
+<tr><td>VCF Cutoff Frequency</td><td><input id="inputCC22"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(22, value)"></td><td><span id="spanCC22">-1</span></td></tr>
+<tr><td>VCF Resonance       </td><td><input id="inputCC23"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(23, value)"></td><td><span id="spanCC23">-1</span></td></tr>
+<tr><td>VCF Envelope Amount </td><td><input id="inputCC24"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(24, value)"></td><td><span id="spanCC24">-1</span></td></tr>
+<tr><td>EG Attack Time      </td><td><input id="inputCC25"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(25, value)"></td><td><span id="spanCC25">-1</span></td></tr>
+<tr><td>EG Decay Time       </td><td><input id="inputCC26"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(26, value)"></td><td><span id="spanCC26">-1</span></td></tr>
+<tr><td>EG Sustain Level    </td><td><input id="inputCC27"  type="range" min="0"  max="120" step="1" onchange="onChangeControlChange(27, value)"></td><td><span id="spanCC27">-1</span></td></tr>
 </table>
 
 <p><input id="inputReset" type="button" value="Reset Controllers" onclick ="resetControllers()"></p>

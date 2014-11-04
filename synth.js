@@ -45,26 +45,30 @@ var Synth = function() {
           this.firstData = DATA_BYTE_INVALID;
         }
       }
-    } else if (this.IsStatusByte(b)) {
-      this.runningStatus = b;
-      this.firstData = DATA_BYTE_INVALID;
     } else if (this.IsSystemMessage(b)) {
       switch (b) {
       case EOX:
+      case TUNE_REQUEST:
         this.systemExclusive = false;
         this.systemDataRemaining = 0;
         break;
       case SONG_SELECT:
       case TIME_CODE:
+        this.systemExclusive = false;
         this.systemDataRemaining = 1;
         break;
       case SONG_POSITION:
+        this.systemExclusive = false;
         this.systemDataRemaining = 2;
         break;
       case SYSTEM_EXCLUSIVE:
         this.systemExclusive = true;
         break;
       }
+    } else if (this.IsStatusByte(b)) {
+      this.systemExclusive = false;
+      this.runningStatus = b;
+      this.firstData = DATA_BYTE_INVALID;
     }
   };
 

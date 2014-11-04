@@ -1,4 +1,4 @@
-# Digital Synth WRA32 1.1.1
+# Digital Synth WRA32 1.x.x
 
 2014-11-01 ISGK Instruments  
 [https://github.com/risgk/digital-synth-wra32](https://github.com/risgk/digital-synth-wra32)
@@ -41,8 +41,8 @@
 
 ## MIDI Implementation Chart
 
-      ISGK Instruments                                                Date: 2014-11-01       
-      Model: Digital Synth WRA32      MIDI Implementation Chart       Version: 1.1.1         
+      ISGK Instruments                                                Date: 2014-xx-xx       
+      Model: Digital Synth WRA32      MIDI Implementation Chart       Version: 1.x.x         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function                      | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
@@ -64,20 +64,20 @@
     +-------------------------------+---------------+---------------+-----------------------+
     | Pitch Bend                    | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
-    | Control                    40 | x             | o             | VCO 1 Waveform        |
-    | Change                     41 | x             | o             | VCO 1 Coarse Tune     |
-    |                            42 | x             | o             | VCO 2 Waveform        |
-    |                            43 | x             | o             | VCO 2 Coarse Tune     |
-    |                            44 | x             | o             | VCO 2 Fine Tune       |
-    |                            45 | x             | o             | VCO 3 Waveform        |
-    |                            46 | x             | o             | VCO 3 Coarse Tune     |
-    |                            47 | x             | o             | VCO 3 Fine Tune       |
-    |                            48 | x             | o             | VCF Cutoff Frequency  |
-    |                            49 | x             | o             | VCF Resonance         |
-    |                            50 | x             | o             | VCF Envelope Amount   |
-    |                            51 | x             | o             | EG Attack Time        |
-    |                            52 | x             | o             | EG Decay Time         |
-    |                            53 | x             | o             | EG Sustain Level      |
+    | Control                    14 | x             | o             | VCO 1 Waveform        |
+    | Change                     15 | x             | o             | VCO 1 Coarse Tune     |
+    |                            16 | x             | o             | VCO 2 Waveform        |
+    |                            17 | x             | o             | VCO 2 Coarse Tune     |
+    |                            18 | x             | o             | VCO 2 Fine Tune       |
+    |                            19 | x             | o             | VCO 3 Waveform        |
+    |                            20 | x             | o             | VCO 3 Coarse Tune     |
+    |                            21 | x             | o             | VCO 3 Fine Tune       |
+    |                            22 | x             | o             | VCF Cutoff Frequency  |
+    |                            23 | x             | o             | VCF Resonance         |
+    |                            24 | x             | o             | VCF Envelope Amount   |
+    |                            25 | x             | o             | EG Attack Time        |
+    |                            26 | x             | o             | EG Decay Time         |
+    |                            27 | x             | o             | EG Sustain Level      |
     +-------------------------------+---------------+---------------+-----------------------+
     | Program                       | x             | x             |                       |
     | Change       : True Number    | ************* | ************* |                       |
