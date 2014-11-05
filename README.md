@@ -41,13 +41,13 @@
 
 ## MIDI Implementation Chart
 
-      ISGK Instruments                                                Date: 2014-xx-xx       
+      [Virtual Analog Synthesizer]                                    Date: 2014-xx-xx       
       Model: Digital Synth WRA32      MIDI Implementation Chart       Version: 1.x.x         
     +-------------------------------+---------------+---------------+-----------------------+
-    | Function                      | Transmitted   | Recognized    | Remarks               |
+    | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
-    | Basic        Default          | x             | 1             |                       |
-    | Channel      Changed          | x             | 1-16          | Memorized             |
+    | Basic        Default          | x             | 1-16          | Memorized             |
+    | Channel      Changed          | x             | 1-16          |                       |
     +-------------------------------+---------------+---------------+-----------------------+
     | Mode         Default          | x             | Mode 4 (M=1)  |                       |
     |              Messages         | x             | x             |                       |
@@ -56,11 +56,11 @@
     | Note                          | x             | 0-127         |                       |
     | Number       : True Voice     | ************* | 0-127         |                       |
     +-------------------------------+---------------+---------------+-----------------------+
-    | Velocity     Note On          | x             | x  *1         |                       |
-    |              Note Off         | x             | x  *2         |                       |
+    | Velocity     Note ON          | x             | x             |                       |
+    |              Note OFF         | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
     | After        Key's            | x             | x             |                       |
-    | Touch        Channel's        | x             | x             |                       |
+    | Touch        Ch's             | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
     | Pitch Bend                    | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
@@ -80,24 +80,24 @@
     |                            27 | x             | o             | EG Sustain Level      |
     +-------------------------------+---------------+---------------+-----------------------+
     | Program                       | x             | x             |                       |
-    | Change       : True Number    | ************* | ************* |                       |
+    | Change       : True #         | ************* |               |                       |
     +-------------------------------+---------------+---------------+-----------------------+
     | System Exclusive              | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
-    | System       : Song Position  | x             | x             |                       |
-    | Common       : Song Select    | x             | x             |                       |
-    |              : Tune Request   | x             | x             |                       |
+    | System       : Song Pos       | x             | x             |                       |
+    | Common       : Song Sel       | x             | x             |                       |
+    |              : Tune           | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
     | System       : Clock          | x             | x             |                       |
     | Real Time    : Commands       | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
-    | Aux          : Local On/Off   | x             | x             |                       |
-    | Messages     : All Notes Off  | x             | o             |                       |
-    |              : Active Sensing | x             | x             |                       |
-    |              : System Reset   | x             | x             |                       |
+    | Aux          : Local ON/OFF   | x             | x             |                       |
+    | Messages     : All Notes OFF  | x             | o             |                       |
+    |              : Active Sense   | x             | x             |                       |
+    |              : Reset          | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
-    | Notes                         | *1  9nH v=1-127                                       |
-    |                               | *2  9nH v=0 or 8nH v=0-127                            |
+    | Notes                         |                                                       |
+    |                               |                                                       |
     +-------------------------------+-------------------------------------------------------+
       Mode 1: Omni On,  Poly          Mode 2: Omni On,  Mono          o: Yes                 
       Mode 3: Omni Off, Poly          Mode 4: Omni Off, Mono          x: No                  
