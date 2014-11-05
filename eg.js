@@ -29,22 +29,11 @@ var EG = function() {
   };
 
   this.clock = function() {
-    var at = this.attackTime;
-    if (at > 120) {
-      at = 120;
-    }
-    var as = 10 / Math.pow(10, (120 - at) / 40);
+    var as = 10 / Math.pow(10, (127 - this.attackTime) / (127 / 3));
     var ar = Math.pow(1 / 3, 1 / (SAMPLING_RATE * as));
-    var dt = this.decayTime;
-    if (dt > 120) {
-      dt = 120;
-    }
-    var ds = 10 / Math.pow(10, (120 - dt) / 40);
+    var ds = 10 / Math.pow(10, (127 - this.decayTime) / (127 / 3));
     var dr = Math.pow(1 / 32, 1 / (SAMPLING_RATE * ds));
-    var sl = this.sustainLevel / 120;
-    if (sl > 1) {
-      sl = 1;
-    }
+    var sl = this.sustainLevel / 127;
 
     switch (this.state) {
     case STATE_ATTACK:
