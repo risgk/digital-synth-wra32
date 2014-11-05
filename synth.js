@@ -47,22 +47,28 @@ var Synth = function() {
       }
     } else if (this.IsSystemMessage(b)) {
       switch (b) {
+      case SYSTEM_EXCLUSIVE:
+        this.systemExclusive = true;
+        this.runningStatus = STATUS_BYTE_INVALID;
+        break;
       case EOX:
       case TUNE_REQUEST:
+      case 0xF4:
+      case 0xF5:
         this.systemExclusive = false;
         this.systemDataRemaining = 0;
+        this.runningStatus = STATUS_BYTE_INVALID;
         break;
-      case SONG_SELECT:
       case TIME_CODE:
+      case SONG_SELECT:
         this.systemExclusive = false;
         this.systemDataRemaining = 1;
+        this.runningStatus = STATUS_BYTE_INVALID;
         break;
       case SONG_POSITION:
         this.systemExclusive = false;
         this.systemDataRemaining = 2;
-        break;
-      case SYSTEM_EXCLUSIVE:
-        this.systemExclusive = true;
+        this.runningStatus = STATUS_BYTE_INVALID;
         break;
       }
     } else if (this.IsStatusByte(b)) {
