@@ -3,7 +3,8 @@ var vco2 = new VCO();
 var vco3 = new VCO();
 var vcf = new VCF();
 var vca = new VCA();
-var eg = new EG();
+var feg = new EG();
+var aeg = new EG();
 var mixer = new Mixer();
 
 var Synth = function() {
@@ -80,9 +81,10 @@ var Synth = function() {
 
   this.clock = function() {
     var level = mixer.clock(vco1.clock(), vco2.clock(), vco3.clock());
-    egOutput = eg.clock();
-    level = vcf.clock(level, egOutput);
-    level = vca.clock(level, egOutput);
+    fegOutput = feg.clock();
+    level = vcf.clock(level, fegOutput);
+    aegOutput = aeg.clock();
+    level = vca.clock(level, aegOutput);
     return level;
   };
 
@@ -125,17 +127,20 @@ var Synth = function() {
     vco1.noteOn(this.noteNumber);
     vco2.noteOn(this.noteNumber);
     vco3.noteOn(this.noteNumber);
-    eg.noteOn();
+    feg.noteOn();
+    aeg.noteOn();
   };
 
   this.noteOff = function(noteNumber) {
     if (noteNumber == this.noteNumber) {
-      eg.noteOff();
+      feg.noteOff();
+      aeg.noteOff();
     }
   };
 
   this.soundOff = function() {
-    eg.soundOff();
+    feg.soundOff();
+    aeg.soundOff();
   };
 
   this.resetPhase = function() {
@@ -182,14 +187,32 @@ var Synth = function() {
     case VCF_ENVELOPE_AMOUNT:
       this.setVCFEnvelopeAmount(value);
       break;
-    case EG_ATTACK_TIME:
-      this.setEGAttackTime(value);
+    case AEG_ATTACK_TIME:
+      this.setAEGAttackTime(value);
       break;
-    case EG_DECAY_TIME:
-      this.setEGDecayTime(value);
+    case AEG_DECAY_TIME:
+      this.setAEGDecayTime(value);
       break;
-    case EG_SUSTAIN_LEVEL:
-      this.setEGSustainLevel(value);
+    case AEG_SUSTAIN_LEVEL:
+      this.setAEGSustainLevel(value);
+      break;
+    case FEG_ATTACK_TIME:
+      this.setFEGAttackTime(value);
+      break;
+    case FEG_DECAY_TIME:
+      this.setFEGDecayTime(value);
+      break;
+    case FEG_SUSTAIN_LEVEL:
+      this.setFEGSustainLevel(value);
+      break;
+    case MIXER_VCO_1_LEVEL:
+      this.setMixerVCO1Level(value);
+      break;
+    case MIXER_VCO_2_LEVEL:
+      this.setMixerVCO2Level(value);
+      break;
+    case MIXER_VCO_3_LEVEL:
+      this.setMixerVCO3Level(value);
       break;
     }
   };
@@ -254,20 +277,45 @@ var Synth = function() {
     vcf.setEnvelopeAmount(value);
   };
 
-  this.setEGAttackTime = function(value) {
-    eg.setAttackTime(value);
+  this.setAEGAttackTime = function(value) {
+    aeg.setAttackTime(value);
   };
 
-  this.setEGDecayTime = function(value) {
-    eg.setDecayTime(value);
+  this.setAEGDecayTime = function(value) {
+    aeg.setDecayTime(value);
   };
 
-  this.setEGSustainLevel = function(value) {
-    eg.setSustainLevel(value);
+  this.setAEGSustainLevel = function(value) {
+    aeg.setSustainLevel(value);
+  };
+
+  this.setFEGAttackTime = function(value) {
+    feg.setAttackTime(value);
+  };
+
+  this.setFEGDecayTime = function(value) {
+    feg.setDecayTime(value);
+  };
+
+  this.setFEGSustainLevel = function(value) {
+    feg.setSustainLevel(value);
+  };
+
+  this.setMixerVCO1Level = function(value) {
+    mixer.setInput1Level(value);
+  };
+
+  this.setMixerVCO2Level = function(value) {
+    mixer.setInput2Level(value);
+  };
+
+  this.setMixerVCO3Level = function(value) {
+    mixer.setInput3Level(value);
   };
 
   this.allNotesOff = function(value) {
-    eg.noteOff();
+    feg.noteOff();
+    aeg.noteOff();
   };
 
   this.systemExclusive     = false;

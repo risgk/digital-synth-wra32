@@ -42,6 +42,14 @@ var VCO = function() {
     return 0;
   });
 
+  this.waveTablesSine = [];
+  generateWaveTable(this.waveTablesSine, function(t, k) {
+    if (k == 1) {
+      return Math.sin((2 * Math.PI) * (t / SAMPLES_PER_CYCLE));
+    }
+    return 0;
+  });
+
   this.freqTableC4toB4 = [];
   var generatefreqTable = function() {
     for (var i = 0; i <= 11; i++) {
@@ -66,6 +74,9 @@ var VCO = function() {
       break;
     case TRIANGLE:
       this.waveTables = this.waveTablesTriangle;
+      break;
+    case SINE:
+      this.waveTables = this.waveTablesSine;
       break;
     }
   };
