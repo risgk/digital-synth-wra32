@@ -14,21 +14,13 @@ var VCF = function() {
   };
 
   this.clock = function(a, k) {
-    var e = this.envelopeAmount;
-    if (e > 120) {
-      e = 120;
+    var c = this.cutoffFrequency + (this.envelopeAmount * k);
+    if (c > 127) {
+      c = 127
     }
-    var c = this.cutoffFrequency + (e * k);
-    if (c > 120) {
-      c = 120;
-    }
-    var r = this.resonance;
-    if (r > 120) {
-      r = 120;
-    }
-    var q = Math.pow(Math.sqrt(2), (r - 24) / 24);
+    var q = Math.pow(Math.sqrt(2), (this.resonance - (127 / 5)) / (127 / 5));
 
-    var f0OverFs = (MAX_FREQ * Math.pow(2, -10 + (c / 12))) / SAMPLING_RATE;
+    var f0OverFs = (MAX_FREQ * Math.pow(2, ((c - 127) / 12))) / SAMPLING_RATE;
     var w0 = 2 * Math.PI * f0OverFs;
     var alpha = Math.sin(w0) / (2 * q);
 
