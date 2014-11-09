@@ -1,4 +1,4 @@
-# Digital Synth WRA32 2.0.0
+# Digital Synth WRA32 3.0.0
 
 2014-11-09 ISGK Instruments  
 [https://github.com/risgk/digital-synth-wra32](https://github.com/risgk/digital-synth-wra32)
@@ -18,14 +18,14 @@
 ## Synth Modules
 
 - VCO 1
-    - Waveform: Sawtooth(0), Square(1), Triangle(2)
+    - Waveform: Sawtooth(0), Square(1), Triangle(2), Sine(3)
     - Coarse Tune: ..., -48(16), ..., 0(64), ..., +48(96), ... [semitone]
 - VCO 2
-    - Waveform: Sawtooth(0), Square(1), Triangle(2)
+    - Waveform: Sawtooth(0), Square(1), Triangle(2), Sine(3)
     - Coarse Tune: ..., -48(16), ..., 0(64), ..., +48(96), ... [semitone]
     - Fine Tune: ..., -50(32), ..., 0(64), ..., +50(96), ... [cent]
 - VCO 3
-    - Waveform: Sawtooth(0), Square(1), Triangle(2)
+    - Waveform: Sawtooth(0), Square(1), Triangle(2), Sine(3)
     - Coarse Tune: ..., -48(16), ..., 0(64), ..., +48(96), ... [semitone]
     - Fine Tune: ..., -50(32), ..., 0(64), ..., +50(96), ... [cent]
 - VCF
@@ -34,15 +34,23 @@
     - Resonance: Q=0.7(0), ..., Q=1.4(51), ..., Q=2.8(102), ..., Q=4(127)
     - Envelope Amount: 0(0), ..., 50.4(64), ..., 100(127) [%]
 - VCA
-- EG
+- AEG
     - Attack Time: 10(0), ..., 98.2(42), ..., 1018.3(85), ..., 10000(127) [ms]
     - Decay Time: 10(0), ..., 98.2(42), ..., 1018.3(85), ..., 10000(127) [ms]
     - Sustain Level: 0(0), ..., 50.4(64), ..., 100(127) [%]
+- FEG
+    - Attack Time: 10(0), ..., 98.2(42), ..., 1018.3(85), ..., 10000(127) [ms]
+    - Decay Time: 10(0), ..., 98.2(42), ..., 1018.3(85), ..., 10000(127) [ms]
+    - Sustain Level: 0(0), ..., 50.4(64), ..., 100(127) [%]
+- Mixer
+    - VCO 1 Level: 0(0), ..., 50.4(64), ..., 100(127) [%]
+    - VCO 2 Level: 0(0), ..., 50.4(64), ..., 100(127) [%]
+    - VCO 3 Level: 0(0), ..., 50.4(64), ..., 100(127) [%]
 
 ## MIDI Implementation Chart
 
       [Virtual Analog Synthesizer]                                    Date: 2014-11-09       
-      Model  Digital Synth WRA32      MIDI Implementation Chart       Version: 2.0.0         
+      Model  Digital Synth WRA32      MIDI Implementation Chart       Version: 3.0.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
@@ -75,9 +83,15 @@
     |                            22 | x             | o             | VCF Cutoff Frequency  |
     |                            23 | x             | o             | VCF Resonance         |
     |                            24 | x             | o             | VCF Envelope Amount   |
-    |                            25 | x             | o             | EG Attack Time        |
-    |                            26 | x             | o             | EG Decay Time         |
-    |                            27 | x             | o             | EG Sustain Level      |
+    |                            25 | x             | o             | AEG Attack Time       |
+    |                            26 | x             | o             | AEG Decay Time        |
+    |                            27 | x             | o             | AEG Sustain Level     |
+    |                            28 | x             | o             | FEG Attack Time       |
+    |                            29 | x             | o             | FEG Decay Time        |
+    |                            30 | x             | o             | FEG Sustain Level     |
+    |                            80 | x             | o             | Mixer VCO 1 Level     |
+    |                            81 | x             | o             | Mixer VCO 2 Level     |
+    |                            82 | x             | o             | Mixer VCO 3 Level     |
     +-------------------------------+---------------+---------------+-----------------------+
     | Program                       | x             | x             |                       |
     | Change       : True #         | ************* |               |                       |
