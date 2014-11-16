@@ -1,6 +1,6 @@
-# Digital Synth WRA32 3.0.0
+# Digital Synth WRA32 4.0.0
 
-2014-11-09 ISGK Instruments  
+2014-11-16 ISGK Instruments  
 [https://github.com/risgk/digital-synth-wra32](https://github.com/risgk/digital-synth-wra32)
 
 ## Concept
@@ -33,15 +33,18 @@
     - Cutoff Frequency: 6.5(0), ..., 19.5(7), ..., 10000(115), ..., 20000(127) [Hz]
     - Resonance: Q=0.7(0), ..., Q=1.4(51), ..., Q=2.8(102), ..., Q=4(127)
     - Envelope Amount: 0(0), ..., 50.4(64), ..., 100(127) [%]
+    - Key Follow: 0(0), ..., 50.4(64), ..., 100(127) [%]
 - VCA
 - AEG
     - Attack Time: 10(0), ..., 98.2(42), ..., 1018.3(85), ..., 10000(127) [ms]
     - Decay Time: 10(0), ..., 98.2(42), ..., 1018.3(85), ..., 10000(127) [ms]
     - Sustain Level: 0(0), ..., 50.4(64), ..., 100(127) [%]
+    - Release Time: 10(0), ..., 98.2(42), ..., 1018.3(85), ..., 10000(127) [ms]
 - FEG
     - Attack Time: 10(0), ..., 98.2(42), ..., 1018.3(85), ..., 10000(127) [ms]
     - Decay Time: 10(0), ..., 98.2(42), ..., 1018.3(85), ..., 10000(127) [ms]
     - Sustain Level: 0(0), ..., 50.4(64), ..., 100(127) [%]
+    - Release Time: 10(0), ..., 98.2(42), ..., 1018.3(85), ..., 10000(127) [ms]
 - Mixer
     - VCO 1 Level: 0(0), ..., 50.4(64), ..., 100(127) [%]
     - VCO 2 Level: 0(0), ..., 50.4(64), ..., 100(127) [%]
@@ -49,8 +52,8 @@
 
 ## MIDI Implementation Chart
 
-      [Virtual Analog Synthesizer]                                    Date: 2014-11-09       
-      Model  Digital Synth WRA32      MIDI Implementation Chart       Version: 3.0.0         
+      [Virtual Analog Synthesizer]                                    Date: 2014-11-16       
+      Model  Digital Synth WRA32      MIDI Implementation Chart       Version: 4.0.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
@@ -92,6 +95,9 @@
     |                            80 | x             | o             | Mixer VCO 1 Level     |
     |                            81 | x             | o             | Mixer VCO 2 Level     |
     |                            82 | x             | o             | Mixer VCO 3 Level     |
+    |                            83 | x             | o             | VCF Key Follow        |
+    |                            85 | x             | o             | AEG Release Time      |
+    |                            86 | x             | o             | FEG Release Time      |
     +-------------------------------+---------------+---------------+-----------------------+
     | Program                       | x             | x             |                       |
     | Change       : True #         | ************* |               |                       |

@@ -47,4 +47,7 @@ const FEG_SUSTAIN_LEVEL     = 30;
 const MIXER_VCO_1_LEVEL     = 80;
 const MIXER_VCO_2_LEVEL     = 81;
 const MIXER_VCO_3_LEVEL     = 82;
+const VCF_KEY_FOLLOW        = 83;
+const AEG_RELEASE_TIME      = 85;
+const FEG_RELEASE_TIME      = 86;
 const ALL_NOTES_OFF         = 123;

@@ -49,7 +49,14 @@ function loadParameters() {
     }
     onChangeControlChange(i, value);
   }
-  for (var i = 80; i <= 82; i++) {
+  for (var i = 80; i <= 83; i++) {
+    value = localStorage.getItem("keyCC" + String(i));
+    if (!value) {
+      return false;
+    }
+    onChangeControlChange(i, value);
+  }
+  for (var i = 85; i <= 86; i++) {
     value = localStorage.getItem("keyCC" + String(i));
     if (!value) {
       return false;
@@ -170,6 +177,9 @@ function resetControllers() {
   onChangeControlChange(80, 64 );
   onChangeControlChange(81, 64 );
   onChangeControlChange(82, 64 );
+  onChangeControlChange(83, 0  );
+  onChangeControlChange(85, 85 );
+  onChangeControlChange(86, 85 );
 }
 
 function noteOn(noteNumber) {
@@ -209,7 +219,7 @@ node.connect(audioContext.destination);
 </script>
 </head>
 <body>
-<h1>Digital Synth WRA32 3.0.0</h1>
+<h1>Digital Synth WRA32 4.0.0</h1>
 
 <p>Virtual Analog Synthesizer Web App<p>
 
@@ -252,9 +262,13 @@ node.connect(audioContext.destination);
     <td>FEG Decay Time      </td><td><input id="inputCC29"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(29, value)"></td><td><span id="spanCC29">-1</span></td></tr>
 <tr><td>VCF Envelope Amount </td><td><input id="inputCC24"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(24, value)"></td><td><span id="spanCC24">-1</span></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>FEG Sustain Level   </td><td><input id="inputCC30"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(30, value)"></td><td><span id="spanCC30">-1</span></td></tr>
+<tr><td>VCF Key Follow      </td><td><input id="inputCC83"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(83, value)"></td><td><span id="spanCC83">-1</span></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>FEG Release Time    </td><td><input id="inputCC86"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(86, value)"></td><td><span id="spanCC86">-1</span></td></tr>
 <tr><td>AEG Attack Time     </td><td><input id="inputCC25"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(25, value)"></td><td><span id="spanCC25">-1</span></td></tr>
 <tr><td>AEG Decay Time      </td><td><input id="inputCC26"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(26, value)"></td><td><span id="spanCC26">-1</span></td></tr>
 <tr><td>AEG Sustain Level   </td><td><input id="inputCC27"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(27, value)"></td><td><span id="spanCC27">-1</span></td></tr>
+<tr><td>AEG Release Time    </td><td><input id="inputCC85"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(85, value)"></td><td><span id="spanCC85">-1</span></td></tr>
+
 <tr><td><input id="inputReset" type="button" value="Reset Controllers" onclick ="resetControllers()"></td><td></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 </table>
 
