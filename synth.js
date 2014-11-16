@@ -127,6 +127,7 @@ var Synth = function() {
     vco1.noteOn(this.noteNumber);
     vco2.noteOn(this.noteNumber);
     vco3.noteOn(this.noteNumber);
+    vcf.noteOn(this.noteNumber);
     feg.noteOn();
     aeg.noteOn();
   };
@@ -214,6 +215,18 @@ var Synth = function() {
     case MIXER_VCO_3_LEVEL:
       this.setMixerVCO3Level(value);
       break;
+
+    case VCF_KEY_FOLLOW:
+      this.setVCFKeyFollow(value);
+      break;
+    case AEG_RELEASE_TIME:
+      this.setAEGReleaseTime(value);
+      break;
+    case FEG_RELEASE_TIME:
+      this.setFEGReleaseTime(value);
+      break;
+
+    
     }
   };
 
@@ -311,6 +324,18 @@ var Synth = function() {
 
   this.setMixerVCO3Level = function(value) {
     mixer.setInput3Level(value);
+  };
+
+  this.setVCFKeyFollow = function(value) {
+    vcf.setKeyFollow(value);
+  };
+
+  this.setAEGReleaseTime = function(value) {
+    aeg.setReleaseTime(value);
+  };
+
+  this.setFEGReleaseTime = function(value) {
+    feg.setReleaseTime(value);
   };
 
   this.allNotesOff = function(value) {

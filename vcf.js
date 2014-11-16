@@ -13,10 +13,21 @@ var VCF = function() {
     this.envelopeAmount = envelopeAmount;
   };
 
+  this.setKeyFollow = function(keyFollow) {
+    this.keyFollow = keyFollow;
+  };
+
+  this.noteOn = function(noteNumber) {
+    this.noteNumber = noteNumber;
+  };
+
   this.clock = function(a, k) {
-    var c = this.cutoffFrequency + (this.envelopeAmount * k);
+    var c = this.cutoffFrequency + (this.envelopeAmount * k)
+                                 + (this.noteNumber - 60) * (this.keyFollow / 127);
     if (c > 127) {
       c = 127
+    } else if (c < 0) {
+      c = 0
     }
     var q = Math.pow(Math.sqrt(2), (this.resonance - (127 / 5)) / (127 / 5));
 
@@ -49,6 +60,8 @@ var VCF = function() {
   this.cutoffFrequency = 120;
   this.resonance       = 0;
   this.envelopeAmount  = 0;
+  this.keyFollow       = 0;
+  this.noteNumber      = 60;
   this.x1              = 0;
   this.x2              = 0;
   this.y1              = 0;

@@ -16,6 +16,10 @@ var EG = function() {
     this.sustainLevel = sustainLevel;
   };
 
+  this.setReleaseTime = function(releaseTime) {
+    this.releaseTime = releaseTime;
+  };
+
   this.noteOn = function() {
     this.state = STATE_ATTACK;
   };
@@ -34,6 +38,8 @@ var EG = function() {
     var ds = 10 / Math.pow(10, (127 - this.decayTime) / (127 / 3));
     var dr = Math.pow(1 / 32, 1 / (SAMPLING_RATE * ds));
     var sl = this.sustainLevel / 127;
+    var rs = 10 / Math.pow(10, (127 - this.releaseTime) / (127 / 3));
+    var rr = Math.pow(1 / 32, 1 / (SAMPLING_RATE * rs));
 
     switch (this.state) {
     case STATE_ATTACK:
@@ -53,7 +59,7 @@ var EG = function() {
       }
       break;
     case STATE_RELEASE:
-      this.level = 0 - ((0 - this.level) * dr);
+      this.level = 0 - ((0 - this.level) * rr);
       if (this.level <= 1 / 1024) {
         this.state = STATE_IDLE;
         this.level = 0;
@@ -71,4 +77,5 @@ var EG = function() {
   this.decayTime    = 0;
   this.sustainLevel = 127;
   this.level        = 0;
+  this.releaseTime  = 0;
 };
