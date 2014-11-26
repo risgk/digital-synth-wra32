@@ -1,6 +1,6 @@
 var VCO = function() {
   const CYCLE_RESOLUTION  = 0x100000000;
-  const MAX_OVERTONE      = 64;
+  const MAX_OVERTONE      = 128;
   const SAMPLES_PER_CYCLE = 2048;
 
   that = this;
