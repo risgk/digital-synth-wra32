@@ -1,13 +1,13 @@
 var VCO = function() {
   const CYCLE_RESOLUTION  = 0x100000000;
   const MAX_OVERTONE      = 127;
-  const SAMPLES_PER_CYCLE = 2048;
+  const SAMPLES_PER_CYCLE = 256;
 
   that = this;
 
   var generateWaveTable = function(waveTables, f) {
     for (var m = 0; m <= Math.floor((MAX_OVERTONE + 1) / 2) - 1; m++) {
-      var waveTable = new Float32Array(SAMPLES_PER_CYCLE);
+      var waveTable = new Float64Array(SAMPLES_PER_CYCLE);
       for (var t = 0; t < SAMPLES_PER_CYCLE; t++) {
         var level = 0;
         for (var k = 1; k <= (m * 2) + 1; k++) {
