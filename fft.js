@@ -1,11 +1,13 @@
 // refs http://d.hatena.ne.jp/ku-ma-me/20111124/p1#20111124f1
 
 var fft = function(a) {
+  var result = [];
+
   var n = a.length;
   for (var i = 0; i < n; i++) {
-    a[i] = new Complex(a[i], 0);
+    result[i] = new Complex(a[i], 0);
   }
-  return fftCore(a);
+  return fftCore(result);
 };
 
 var fftCore = function(a) {
@@ -46,7 +48,7 @@ var ifft = function(a) {
   result = fftCore(result);
 
   for (var i = 0; i < n; i++) {
-    result[i] = Math.round(result[i].conj().real / n)
+    result[i] = result[i].conj().real / n;
   }
 
   return result;
