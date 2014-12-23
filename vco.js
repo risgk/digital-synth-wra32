@@ -21,13 +21,13 @@ var VCO = function() {
 
   this.waveTablesSawtooth = [];
   generateWaveTable(this.waveTablesSawtooth, function(t, k) {
-    return (2 / Math.PI) * Math.sin((2 * Math.PI) * (t / SAMPLES_PER_CYCLE) * k) / k;
+    return (2 / Math.PI) * Math.sin((2 * Math.PI) * ((t + 0.5) / SAMPLES_PER_CYCLE) * k) / k;
   });
 
   this.waveTablesSquare = [];
   generateWaveTable(this.waveTablesSquare, function(t, k) {
     if (k % 2 == 1) {
-      return (4 / Math.PI) * Math.sin((2 * Math.PI) * (t / SAMPLES_PER_CYCLE) * k) / k;
+      return (4 / Math.PI) * Math.sin((2 * Math.PI) * ((t + 0.5) / SAMPLES_PER_CYCLE) * k) / k;
     }
     return 0;
   });
@@ -35,9 +35,9 @@ var VCO = function() {
   this.waveTablesTriangle = [];
   generateWaveTable(this.waveTablesTriangle, function(t, k) {
     if (k % 4 == 1) {
-      return (8 / Math.pow(Math.PI, 2)) * Math.sin((2 * Math.PI) * (t / SAMPLES_PER_CYCLE) * k) / Math.pow(k, 2);
+      return (8 / Math.pow(Math.PI, 2)) * Math.sin((2 * Math.PI) * ((t + 0.5) / SAMPLES_PER_CYCLE) * k) / Math.pow(k, 2);
     } else if (k % 4 == 3) {
-      return (8 / Math.pow(Math.PI, 2)) * -Math.sin((2 * Math.PI) * (t / SAMPLES_PER_CYCLE) * k) / Math.pow(k, 2);
+      return (8 / Math.pow(Math.PI, 2)) * -Math.sin((2 * Math.PI) * ((t + 0.5) / SAMPLES_PER_CYCLE) * k) / Math.pow(k, 2);
     }
     return 0;
   });
@@ -45,7 +45,7 @@ var VCO = function() {
   this.waveTablesSine = [];
   generateWaveTable(this.waveTablesSine, function(t, k) {
     if (k == 1) {
-      return Math.sin((2 * Math.PI) * (t / SAMPLES_PER_CYCLE));
+      return Math.sin((2 * Math.PI) * ((t + 0.5) / SAMPLES_PER_CYCLE));
     }
     return 0;
   });
