@@ -50,6 +50,45 @@ var VCO = function() {
     return 0;
   });
 
+  var generateWaveTableFFT = function(waveTables, originalWaveTable) {
+    for (var m = 0; m <= Math.floor((MAX_OVERTONE + 1) / 2) - 1; m++) {
+      var waveTable = new Float64Array(SAMPLES_PER_CYCLE);
+      var w = ifft(lpf(fft(originalWaveTable), (m * 2) + 1));
+      for (var t = 0; t < SAMPLES_PER_CYCLE; t++) {
+        waveTable[t] = w[t];
+      }
+      waveTables[m] = waveTable;
+    }
+  };
+
+  this.waveTablesPulse25 = [];
+  this.originalPulse25 = [];
+  for (var t = 0; t < SAMPLES_PER_CYCLE; t++) {
+    this.originalPulse25[t] = (t + 0.5) < (SAMPLES_PER_CYCLE * 0.25) ? 1 : -1;
+  }
+  generateWaveTableFFT(this.waveTablesPulse25, this.originalPulse25);
+
+  this.waveTablesPulse12 = [];
+  this.originalPulse12 = [];
+  for (var t = 0; t < SAMPLES_PER_CYCLE; t++) {
+    this.originalPulse12[t] = (t + 0.5) < (SAMPLES_PER_CYCLE * 0.125) ? 1 : -1;
+  }
+  generateWaveTableFFT(this.waveTablesPulse12, this.originalPulse12);
+
+  this.waveTablesPseudoTri = [];
+  this.shortPseudoTri = [
+    +1/16,  +3/16,  +5/16,  +7/16,  +9/16, +11/16, +13/16, +15/16,
+   +15/16, +13/16, +11/16,  +9/16,  +7/16,  +5/16,  +3/16,  +1/16,
+    -1/16,  -3/16,  -5/16,  -7/16,  -9/16, -11/16, -13/16, -15/16,
+   -15/16, -13/16, -11/16,  -9/16,  -7/16,  -5/16,  -3/16,  -1/16,
+  ];
+  this.originalPseudoTri=[];
+  for (var t = 0; t < SAMPLES_PER_CYCLE; t++) {
+    var i = Math.floor((t + 0.5) / Math.floor(SAMPLES_PER_CYCLE / this.shortPseudoTri.length));
+    this.originalPseudoTri[t] = this.shortPseudoTri[i];
+  }
+  generateWaveTableFFT(this.waveTablesPseudoTri, this.originalPseudoTri);
+
   this.freqTableC4toB4 = [];
   var generatefreqTable = function() {
     for (var i = 0; i <= 11; i++) {
@@ -77,6 +116,15 @@ var VCO = function() {
       break;
     case SINE:
       this.waveTables = this.waveTablesSine;
+      break;
+    case PULSE_25:
+      this.waveTables = this.waveTablesPulse25;
+      break;
+    case PULSE_12:
+      this.waveTables = this.waveTablesPulse12;
+      break;
+    case PSEUDO_TRI:
+      this.waveTables = this.waveTablesPseudoTri;
       break;
     }
   };
