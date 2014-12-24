@@ -1,6 +1,6 @@
-# Digital Synth WRA32 4.2.0
+# Digital Synth WRA32 4.3.0
 
-2014-12-20 ISGK Instruments  
+2014-12-24 ISGK Instruments  
 [https://github.com/risgk/digital-synth-wra32](https://github.com/risgk/digital-synth-wra32)
 
 ## Concept
@@ -18,14 +18,17 @@
 ## Synth Modules
 
 - VCO 1
-    - Waveform: Sawtooth(0), Square(1), Triangle(2), Sine(3)
+    - Waveform: Sawtooth(0), Square(1), Triangle(2), Sine(3),  
+      Pulse-25%(4), Pulse-12.5%(5), Pseudo-Triangle(6)
     - Coarse Tune: ..., -48(16), ..., 0(64), ..., +48(96), ... [semitone]
 - VCO 2
-    - Waveform: Sawtooth(0), Square(1), Triangle(2), Sine(3)
+    - Waveform: Sawtooth(0), Square(1), Triangle(2), Sine(3),  
+      Pulse-25%(4), Pulse-12.5%(5), Pseudo-Triangle(6)
     - Coarse Tune: ..., -48(16), ..., 0(64), ..., +48(96), ... [semitone]
     - Fine Tune: ..., -50(32), ..., 0(64), ..., +50(96), ... [cent]
 - VCO 3
-    - Waveform: Sawtooth(0), Square(1), Triangle(2), Sine(3)
+    - Waveform: Sawtooth(0), Square(1), Triangle(2), Sine(3),  
+      Pulse-25%(4), Pulse-12.5%(5), Pseudo-Triangle(6)
     - Coarse Tune: ..., -48(16), ..., 0(64), ..., +48(96), ... [semitone]
     - Fine Tune: ..., -50(32), ..., 0(64), ..., +50(96), ... [cent]
 - VCF
@@ -52,8 +55,8 @@
 
 ## MIDI Implementation Chart
 
-      [Virtual Analog Synthesizer]                                    Date: 2014-12-20       
-      Model  Digital Synth WRA32      MIDI Implementation Chart       Version: 4.2.0         
+      [Virtual Analog Synthesizer]                                    Date: 2014-12-24       
+      Model  Digital Synth WRA32      MIDI Implementation Chart       Version: 4.3.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+

@@ -2,10 +2,13 @@ const MAX_FREQ        = 20000;
 const NOTE_NUMBER_MIN = 0;
 const NOTE_NUMBER_MAX = 127;
 
-const SAWTOOTH = 0;
-const SQUARE   = 1;
-const TRIANGLE = 2;
-const SINE     = 3;
+const SAWTOOTH   = 0;
+const SQUARE     = 1;
+const TRIANGLE   = 2;
+const SINE       = 3;
+const PULSE_25   = 4;
+const PULSE_12   = 5;
+const PSEUDO_TRI = 6;
 
 const ON  = 127;
 const OFF = 0;
