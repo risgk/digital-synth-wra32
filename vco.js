@@ -51,9 +51,10 @@ var VCO = function() {
   });
 
   var generateWaveTableFFT = function(waveTables, originalWaveTable) {
+    var fftWaveTable = fft(originalWaveTable);
     for (var m = 0; m <= Math.floor((MAX_OVERTONE + 1) / 2) - 1; m++) {
       var waveTable = new Float64Array(SAMPLES_PER_CYCLE);
-      var w = ifft(lpf(fft(originalWaveTable), (m * 2) + 1));
+      var w = ifft(lpf(fftWaveTable, (m * 2) + 1));
       for (var t = 0; t < SAMPLES_PER_CYCLE; t++) {
         waveTable[t] = w[t];
       }
