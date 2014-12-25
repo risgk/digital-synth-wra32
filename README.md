@@ -1,6 +1,6 @@
-# Digital Synth WRA32 4.3.0
+# Digital Synth WRA32 4.4.0
 
-2014-12-24 ISGK Instruments  
+2014-12-25 ISGK Instruments  
 [https://github.com/risgk/digital-synth-wra32](https://github.com/risgk/digital-synth-wra32)
 
 ## Concept
@@ -55,8 +55,8 @@
 
 ## MIDI Implementation Chart
 
-      [Virtual Analog Synthesizer]                                    Date: 2014-12-24       
-      Model  Digital Synth WRA32      MIDI Implementation Chart       Version: 4.3.0         
+      [Virtual Analog Synthesizer]                                    Date: 2014-12-25       
+      Model  Digital Synth WRA32      MIDI Implementation Chart       Version: 4.4.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
