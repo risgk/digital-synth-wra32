@@ -16,12 +16,12 @@ var Complex = function(real, imaginary) {
     return new Complex(this.real, -this.imaginary);
   };
 
-  if(typeof real === "undefined") {
+  if (typeof real === "undefined") {
     real = 0;
   };
   this.real = real;
 
-  if(typeof imaginary === "undefined") {
+  if (typeof imaginary === "undefined") {
     imaginary = 0;
   };
   this.imaginary = imaginary;
