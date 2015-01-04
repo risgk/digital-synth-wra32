@@ -5,13 +5,13 @@ var VCO = function() {
 
   that = this;
 
-  var generateWaveTable = function(waveTables, f) {
+  var generateWaveTable = function(waveTables, amp, f) {
     for (var m = 0; m <= Math.floor((MAX_OVERTONE + 1) / 2) - 1; m++) {
       var waveTable = new Float64Array(SAMPLES_PER_CYCLE);
       for (var n = 0; n < SAMPLES_PER_CYCLE; n++) {
         var level = 0;
         for (var k = 1; k <= (m * 2) + 1; k++) {
-          level += f(n, k);
+          level += amp * f(n, k);
         }
         waveTable[n] = level;
       }
@@ -20,12 +20,12 @@ var VCO = function() {
   };
 
   this.waveTablesSawtooth = [];
-  generateWaveTable(this.waveTablesSawtooth, function(n, k) {
+  generateWaveTable(this.waveTablesSawtooth, 1, function(n, k) {
     return (2 / Math.PI) * Math.sin((2 * Math.PI) * ((n + 0.5) / SAMPLES_PER_CYCLE) * k) / k;
   });
 
   this.waveTablesSquare = [];
-  generateWaveTable(this.waveTablesSquare, function(n, k) {
+  generateWaveTable(this.waveTablesSquare, 1 / Math.sqrt(3), function(n, k) {
     if (k % 2 == 1) {
       return (4 / Math.PI) * Math.sin((2 * Math.PI) * ((n + 0.5) / SAMPLES_PER_CYCLE) * k) / k;
     }
@@ -33,7 +33,7 @@ var VCO = function() {
   });
 
   this.waveTablesTriangle = [];
-  generateWaveTable(this.waveTablesTriangle, function(n, k) {
+  generateWaveTable(this.waveTablesTriangle, 1, function(n, k) {
     if (k % 4 == 1) {
       return (8 / Math.pow(Math.PI, 2)) * Math.sin((2 * Math.PI) * ((n + 0.5) / SAMPLES_PER_CYCLE) * k) / Math.pow(k, 2);
     } else if (k % 4 == 3) {
@@ -43,20 +43,20 @@ var VCO = function() {
   });
 
   this.waveTablesSine = [];
-  generateWaveTable(this.waveTablesSine, function(n, k) {
+  generateWaveTable(this.waveTablesSine, Math.sqrt(2) / Math.sqrt(3), function(n, k) {
     if (k == 1) {
       return Math.sin((2 * Math.PI) * ((n + 0.5) / SAMPLES_PER_CYCLE));
     }
     return 0;
   });
 
-  var generateWaveTableFFT = function(waveTables, originalWaveTable) {
+  var generateWaveTableFFT = function(waveTables, amp, originalWaveTable) {
     var fftWaveTable = fft(originalWaveTable);
     for (var m = 0; m <= Math.floor((MAX_OVERTONE + 1) / 2) - 1; m++) {
       var waveTable = new Float64Array(SAMPLES_PER_CYCLE);
       var w = ifft(lpf(fftWaveTable, (m * 2) + 1));
       for (var n = 0; n < SAMPLES_PER_CYCLE; n++) {
-        waveTable[n] = w[n];
+        waveTable[n] = amp * w[n];
       }
       waveTables[m] = waveTable;
     }
@@ -67,14 +67,14 @@ var VCO = function() {
   for (var n = 0; n < SAMPLES_PER_CYCLE; n++) {
     this.originalPulse25[n] = (n + 0.5) < (SAMPLES_PER_CYCLE * 0.25) ? 1 : -1;
   }
-  generateWaveTableFFT(this.waveTablesPulse25, this.originalPulse25);
+  generateWaveTableFFT(this.waveTablesPulse25, 1 / Math.sqrt(3), this.originalPulse25);
 
   this.waveTablesPulse12 = [];
   this.originalPulse12 = [];
   for (var n = 0; n < SAMPLES_PER_CYCLE; n++) {
     this.originalPulse12[n] = (n + 0.5) < (SAMPLES_PER_CYCLE * 0.125) ? 1 : -1;
   }
-  generateWaveTableFFT(this.waveTablesPulse12, this.originalPulse12);
+  generateWaveTableFFT(this.waveTablesPulse12, 1 / Math.sqrt(3), this.originalPulse12);
 
   this.waveTablesPseudoTri = [];
   this.shortPseudoTri = [
@@ -88,7 +88,7 @@ var VCO = function() {
     var i = Math.floor((n + 0.5) / Math.floor(SAMPLES_PER_CYCLE / this.shortPseudoTri.length));
     this.originalPseudoTri[n] = this.shortPseudoTri[i];
   }
-  generateWaveTableFFT(this.waveTablesPseudoTri, this.originalPseudoTri);
+  generateWaveTableFFT(this.waveTablesPseudoTri,  1, this.originalPseudoTri);
 
   this.freqTableC4toB4 = [];
   var generatefreqTable = function() {
