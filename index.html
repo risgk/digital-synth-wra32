@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <head>
+<meta charset="utf-8">
 <title>Digital Synth WRA32</title>
 <style>
 td {
@@ -18,7 +19,7 @@ td.keyh {
   border: 2px solid #999;
 }
 </style>
-<script src="common.js"></script>
+<script src="common.js" charset="utf-8"></script>
 <script>
 var midiCh    = 0;
 var volume    = 0;
@@ -206,14 +207,14 @@ function onAudioProcess(event) {
   }
 }
 </script>
-<script src="complex.js"></script>
-<script src="fft.js"></script>
-<script src="vco.js"></script>
-<script src="vcf.js"></script>
-<script src="vca.js"></script>
-<script src="eg.js"></script>
-<script src="mixer.js"></script>
-<script src="synth.js"></script>
+<script src="complex.js" charset="utf-8"></script>
+<script src="fft.js" charset="utf-8"></script>
+<script src="vco.js" charset="utf-8"></script>
+<script src="vcf.js" charset="utf-8"></script>
+<script src="vca.js" charset="utf-8"></script>
+<script src="eg.js" charset="utf-8"></script>
+<script src="mixer.js" charset="utf-8"></script>
+<script src="synth.js" charset="utf-8"></script>
 <script>
 var synth = new Synth();
 
@@ -221,7 +222,7 @@ node.connect(audioContext.destination);
 </script>
 </head>
 <body>
-<h1>Digital Synth WRA32 4.5.0</h1>
+<h1>Digital Synth WRA32 5.0.0</h1>
 
 <p>Virtual Analog Synthesizer Web App<p>
 

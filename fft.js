@@ -1,4 +1,6 @@
-// refs http://d.hatena.ne.jp/ku-ma-me/20111124/p1#20111124f1
+// refs http://d.hatena.ne.jp/ku-ma-me/20111124/p1
+// Ruby で FFT (高速フーリエ変換) を書いてみた - まめめも
+// by ku-ma-me
 
 var fft = function(a) {
   var result = [];
