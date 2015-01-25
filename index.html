@@ -121,6 +121,8 @@ function onMIDISuccess(midiAccess) {
   midi = midiAccess;
 
   // refs http://www.slideshare.net/toyoshim/web-midi-api-update
+  // Web MIDI API update
+  // by Takashi Toyoshima
   if (typeof midi.inputs === "function") {
     midiInputs = midi.inputs();
   } else {
