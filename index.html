@@ -121,6 +121,8 @@ function onMIDISuccess(midiAccess) {
   midi = midiAccess;
 
   // refs http://www.slideshare.net/toyoshim/web-midi-api-update
+  // Web MIDI API update
+  // by Takashi Toyoshima
   if (typeof midi.inputs === "function") {
     midiInputs = midi.inputs();
   } else {
@@ -222,7 +224,7 @@ node.connect(audioContext.destination);
 </script>
 </head>
 <body>
-<h1>Digital Synth WRA32 5.0.0</h1>
+<h1>Digital Synth WRA32 5.0.1</h1>
 
 <p>Virtual Analog Synthesizer Web App<p>
 
@@ -333,10 +335,6 @@ node.connect(audioContext.destination);
 <h2>About</h2>
 
 <p>Made by ISGK Instruments (<a href="https://github.com/risgk/digital-synth-wra32">View on GitHub</a>)</p>
-
-<h2>License</h2>
-
-<p><a href="http://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0 Universal</a></p>
 
 </body>
 </html>
