@@ -11,9 +11,9 @@
 ## Features
 
 - Using Web MIDI API and Web Audio API
-- We recommend Google Chrome (Please enable Web MIDI API)
+- We recommend Google Chrome, which implements Web MIDI API
 - Supporting MIDI IN
-- Supporting 32 bit float audio (48 kHz/32 bit in Google Chrome 38 for Windows)
+- Supporting 32 bit float audio
 
 ## Synth Modules
 
