@@ -120,17 +120,10 @@ function onMIDISuccess(midiAccess) {
   console.log("MIDI ready!");
   midi = midiAccess;
 
-  // refs http://www.slideshare.net/toyoshim/web-midi-api-update
-  // Web MIDI API update
-  // by Takashi Toyoshima
-  if (typeof midi.inputs === "function") {
-    midiInputs = midi.inputs();
-  } else {
-    var inputIterator = midi.inputs.values();
-    midiInputs = [];
-    for (var o = inputIterator.next(); !o.done; o = inputIterator.next()) {
-      midiInputs.push(o.value)
-    }
+  var inputIterator = midi.inputs.values();
+  midiInputs = [];
+  for (var o = inputIterator.next(); !o.done; o = inputIterator.next()) {
+    midiInputs.push(o.value)
   }
 
   var selectInputPort = document.getElementById("selectInputPort");
@@ -224,7 +217,7 @@ node.connect(audioContext.destination);
 </script>
 </head>
 <body>
-<h1>Digital Synth WRA32 5.1.0</h1>
+<h1>Digital Synth WRA32 5.1.1</h1>
 
 <p>Virtual Analog Synthesizer Web App<p>
 
@@ -245,7 +238,7 @@ node.connect(audioContext.destination);
 </tr>
 </table>
 
-<p>We recommend Google Chrome (Please enable Web MIDI API)</p>
+<p>We recommend Google Chrome, which implements Web MIDI API</p>
 
 <h2>Controllers</h2>
 
